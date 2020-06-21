@@ -1,0 +1,31 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    height: 500px;
+    width: 100%;
+}
+
+#div
+{
+    color: white;
+    margin: auto;
+    margin-top: 150px;
+    width: 30%;
+    height: 40%;
+}
+
+a
+{
+    text-decoration: none;
+    color: whitesmoke !important;
+}
+
+a:hover
+{
+    color: #00FF00 !important;
+}
