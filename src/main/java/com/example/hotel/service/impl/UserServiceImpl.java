@@ -8,7 +8,6 @@ import com.example.hotel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,7 +59,15 @@ public class UserServiceImpl implements UserService
 				}
 
 				session.setAttribute("menu",map);
-				str="yes";
+				switch (userinfo.getUrole())
+				{
+					case "1" :
+						str="yes2";
+						break;
+					default:
+						str="yes";
+						break;
+				}
 			}
 		}
 		return str;

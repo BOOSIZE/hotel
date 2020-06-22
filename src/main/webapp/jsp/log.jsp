@@ -83,6 +83,19 @@
 								}
 							});
 						}
+						else
+						{
+							layer.open({
+								title: ['温馨提示'],
+								content: '登录成功',
+								btn: ['确定'],
+								closeBtn :0,
+								icon:1,
+								yes: function(){
+									window.location.href="<%=path+"go/to/main2"%>";
+								}
+							});
+						}
 					},
 					error:function ()
 					{
