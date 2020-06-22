@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -36,4 +37,12 @@ public class UserController
 	{
 		return userServiceImpl.log(account, password, session);
 	}
+	@RequestMapping("userOpe")
+	@ResponseBody
+	public String userOpe(String urole, Integer page, Integer limit, HttpServletRequest request)
+	{
+
+		return userServiceImpl.userOpe(urole,page,limit,request);
+	}
+
 }

@@ -3,12 +3,14 @@ package com.example.hotel.service.impl;
 import com.example.hotel.dao.MenuDao;
 import com.example.hotel.dao.UserDao;
 import com.example.hotel.entity.Menu;
+import com.example.hotel.entity.TableModel;
 import com.example.hotel.entity.Userinfo;
 import com.example.hotel.service.UserService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,10 +62,29 @@ public class UserServiceImpl implements UserService
 				}
 
 				session.setAttribute("menu",map);
-				str="yes";
+				switch (userinfo.getUrole())
+				{
+					case "1" :
+						str="yes2";
+						break;
+					default:
+						str="yes";
+						break;
+				}
 			}
 		}
 		return str;
+	}
+
+	@Override
+	public String userOpe(String urole, Integer page, Integer limit, HttpServletRequest request) {
+		if (urole == null || urole.equals("")){urole = null;}
+		TableModel tableModel = new TableModel();
+		tableModel.setCount(userDao.getSum(urole));
+		tableModel.setData(userDao.userOpe(limit,limit*(page-1),urole));
+
+		return new Gson().toJson(tableModel);
+
 	}
 
 	@Override

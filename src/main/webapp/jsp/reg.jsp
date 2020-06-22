@@ -32,8 +32,6 @@
 		<div class="layui-form-mid layui-word-aux"><span id="sp1" style="color: RED;"></span></div>
 	</div>
 
-
-
 	<div class="layui-form-item">
 		<label class="layui-form-label">密码:</label>
 		<div class="layui-input-inline">

@@ -8,6 +8,7 @@ import org.apache.ibatis.type.MappedJdbcTypes;
 
 import javax.annotation.ManagedBean;
 import javax.jws.soap.SOAPBinding;
+import java.util.List;
 
 @Mapper
 public interface UserDao
@@ -19,4 +20,12 @@ public interface UserDao
 	@Select("SELECT * FROM USERINFO WHERE ACCOUNT =#{account}")
 	public abstract Userinfo getUser(String account);
 
+	@Select("<script> SELECT COUNT(*) FROM userinfo WHERE urole!=1 " +
+			"<when test='urole!=null'> AND urole =#{urole}</when></script>")
+    int getSum(String urole);
+
+	@Select("<script> SELECT * FROM userinfo WHERE urole!=1 " +
+			"<when test='urole!=null'> AND urole = #{urole}</when>" +
+			"ORDER BY udate desc LIMIT #{limit} OFFSET #{end}  </script>")
+	List<Userinfo> userOpe(Integer limit, int end, String urole);
 }
