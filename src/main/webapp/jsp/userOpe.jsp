@@ -32,11 +32,14 @@
         <div class="layui-input-inline">
             <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
         </div>
+        <div class="layui-input-inline">
+            <button class="layui-btn" id="add">新增</button>
+        </div>
     </div>
 
 </form>
-<button class="layui-btn" id="add">新增</button>
-<table id="userinfo"  lay-filter="userinfo"></table>
+
+<table id="userinfo" lay-filter="userinfo"></table>
 
 <script type="text/html" id="adduser">
     <form class="layui-form" action="">
@@ -58,7 +61,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">姓名:</label>
             <div class="layui-input-inline">
-                <input name="uname" type="text" lay-verify="required" placeholder="请输入你的姓名" autocomplete="off" class="layui-input">
+                <input name="uname" type="text" lay-verify="required" placeholder="请输入你的姓名" autocomplete="off"
+                       class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -105,11 +109,18 @@
                 , {field: 'uname', title: '姓名'}
                 , {field: 'usex', title: '性别'}
                 , {field: 'udate', title: '注册时间'}
-                , {field: 'urole', title: '角色'}
+                ,{
+                    field: 'urole', title: '角色',  templet: function (d) {
+                        if (d.urole === '3') {
+                            return '经理';
+                        } else if (d.urole === '2') {
+                            return '员工';
+                        }
+                    }
+                }
                 , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}
             ]]
         });
-
 
 
         //监听工具条
@@ -128,7 +139,7 @@
                             if (result === 'true') {
                                 layer.alert("删除成功");
                                 table.reload('userinfo');
-                            }else {
+                            } else {
                                 layer.alert('删除失败');
                             }
                         }
@@ -163,32 +174,37 @@
 
             form.on('submit(addUser)', function (data) {
                 console.log(data.field)
-                if (data.field.account.length != 5){
-                    layer.msg("账号必须为5位数");
-                }else if (data.field.uname.length < 2 || data.field.uname.length > 4 ){
-                    layer.msg("姓名必须2~4位数");
-                }else {
-                    $.ajax({
-                        url: '<%=path+"user/addUser"%>',
-                        type: "POST",
-                        data: data.field,
-                        dataType: 'text',
-                        success: function (result) {
-                            if (result === 'true') {
-                                layer.alert('新增成功,初始密码：000000');
-                                layer.closeAll('page');
-                                table.reload('userinfo');
-                            } else if (result === 'false') {
-                                layer.alert('新增失败');
-                            } else if (result === 'have') {
-                                layer.alert('已有此账号，请重新新增');
-                            }
+                if (data.field.account.length != 6) {
+                    layer.msg("账号必须为6位");
+                } else if (data.field.uname.length < 2 || data.field.uname.length > 6) {
+                    layer.msg("姓名必须2~6位");
+                } else {
+                    data.field.account = 'yg'+data.field.account;
+                    layer.confirm('确认新增账号:'+data.field.account+',初始密码:000000的员工吗?', function (index) {
+                        $.ajax({
+                            url: '<%=path+"user/addUser"%>',
+                            type: "POST",
+                            data: data.field,
+                            dataType: 'text',
+                            success: function (result) {
+                                if (result === 'true') {
+                                    layer.alert('新增成功');
+                                    layer.closeAll('page');
+                                    table.reload('userinfo');
+                                } else if (result === 'false') {
+                                    layer.alert('新增失败');
+                                } else if (result === 'have') {
+                                    layer.alert('已有此账号，请重新新增');
+                                }
 
-                        }
+                            }
+                        });
                     });
+                    }
+                    return false;
                 }
-                return false;
-            });
+            );
+            return false;
         });
     });
 
