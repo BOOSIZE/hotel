@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService
 	{
 		String str="no";
 		userinfo.setUdate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		userinfo.setUrole("1");
 		int n=userDao.reg(userinfo);
 		if(n>0)
 		{
@@ -85,6 +86,29 @@ public class UserServiceImpl implements UserService
 
 		return new Gson().toJson(tableModel);
 
+	}
+
+	@Override
+	public String addUser(Userinfo userinfo) {
+		String result = "false";
+		userinfo.setUdate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		userinfo.setPassword("000000");
+		if (userDao.getUser(userinfo.getAccount())!=null){
+			result = "have";
+		}else if (userDao.reg(userinfo) > 0){
+			result = "true";
+		}
+
+		return result;
+	}
+
+	@Override
+	public String delUser(Userinfo userinfo) {
+		String result = "false";
+		if (userDao.delUser(userinfo) > 0){
+			result = "true";
+		}
+		return result;
 	}
 
 	@Override

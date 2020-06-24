@@ -45,4 +45,20 @@ public class UserController
 		return userServiceImpl.userOpe(urole,page,limit,request);
 	}
 
+	@RequestMapping("addUser")
+	@ResponseBody
+	public String addUser(Userinfo userinfo)
+	{
+
+		return userServiceImpl.addUser(userinfo);
+	}
+
+
+	@RequestMapping("delUser")
+	@ResponseBody
+	public String delUser(Userinfo userinfo)
+	{
+
+		return userServiceImpl.delUser(userinfo);
+	}
 }

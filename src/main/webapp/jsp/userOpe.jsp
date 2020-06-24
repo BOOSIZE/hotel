@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    String path=application.getContextPath()+"/";
+    String path = application.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">角色</label>
         <div class="layui-input-inline">
-            <select name="urole" >
+            <select name="urole">
                 <option value=""></option>
                 <option value="3">经理</option>
                 <option value="2">员工</option>
@@ -36,39 +36,42 @@
 
 </form>
 <button class="layui-btn" id="add">新增</button>
-<table id="userinfo" ></table>
+<table id="userinfo"  lay-filter="userinfo"></table>
 
 <script type="text/html" id="adduser">
     <form class="layui-form" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">账号:</label>
             <div class="layui-input-inline">
-                <input type="text" name="account" lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+                <input type="text" name="account" lay-verify="required" placeholder="请输入账号" autocomplete="off"
+                       class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">性别:</label>
             <div class="layui-input-inline">
                 <input type="radio" name="usex" value="男" title="男" checked>
-                <input type="radio" name="usex" value="女" title="女" >
+                <input type="radio" name="usex" value="女" title="女">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">姓名:</label>
             <div class="layui-input-inline">
-                <input type="text"  lay-verify="required" placeholder="请输入你的姓名" autocomplete="off" class="layui-input">
+                <input name="uname" type="text" lay-verify="required" placeholder="请输入你的姓名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">角色</label>
             <div class="layui-input-inline">
-                <select name="urole" >
+                <select name="urole">
                     <option value="3">经理</option>
                     <option value="2">员工</option>
                 </select>
             </div>
-            <div class="layui-input-inline">
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline" style="margin-left: 25%">
                 <button class="layui-btn" lay-submit lay-filter="addUser">新增</button>
             </div>
         </div>
@@ -84,51 +87,107 @@
 
 </script>
 <script>
-    layui.use(['jquery','layer','form','table'], function(){
+    layui.use(['jquery', 'layer', 'form', 'table'], function () {
         var $ = layui.jquery;
-        var layer=layui.layer;
-        var form=layui.form;
-        var table=layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
 
         table.render({
             elem: '#userinfo'
-            ,id: "testReload"
+            // , id: "testReload"
             // ,height: 312
-            ,url: '<%=path+"user/userOpe"%>' //数据接口
-            ,page: true //开启分页
-            ,cols: [[ //表头
-                {title: '序号',templet: '#xuhao'}
-                ,{field: 'account', title: '账号'}
-                ,{field: 'uname', title: '姓名'}
-                ,{field: 'usex', title: '性别'}
-                ,{field: 'udate', title: '注册时间'}
-                ,{field: 'urole', title: '角色'}
+            , url: '<%=path+"user/userOpe"%>' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {title: '序号', templet: '#xuhao'}
+                , {field: 'account', title: '账号'}
+                , {field: 'uname', title: '姓名'}
+                , {field: 'usex', title: '性别'}
+                , {field: 'udate', title: '注册时间'}
+                , {field: 'urole', title: '角色'}
                 , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}
             ]]
         });
 
+
+
+        //监听工具条
+        table.on('tool(userinfo)', function (obj) {
+            console.log(obj)
+            var data = obj.data;//获取点击行数据
+            if (obj.event === 'delete') {
+                layer.confirm('确认删除该员工吗?', function (index) {
+
+                    $.ajax({
+                        url: "/user/delUser",
+                        type: "POST",
+                        data: data,
+                        dataType: 'text',
+                        success: function (result) {
+                            if (result === 'true') {
+                                layer.alert("删除成功");
+                                table.reload('userinfo');
+                            }else {
+                                layer.alert('删除失败');
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
         form.on('submit(formDemo)', function (data) {
-            table.reload('testReload',
+            table.reload('userinfo',
                 {
                     page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    ,where: {
-                            urole: data.field.urole
-                        }
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        urole: data.field.urole
+                    }
                 });
             return false;
         });
 
-
         $('#add').click(function () {
             layer.open({
-                type: 2,
-                title:'添加管理员',
-                skin: 'layui-layer-rim', //加上边框
-                maxmin: true, //开启最大化最小化按钮
-                area: ['600px', '400px'],
-                content:$('#adduser')
+                type: 1 //Page层类型
+                , area: ['400px', '350px']
+                , title: '新增员工'
+                , shade: 0.3 //遮罩透明度
+                , anim: 4 //0-6的动画形式，-1不开启
+                , content: $("#adduser").html()
+            });
+            form.render();
+
+            form.on('submit(addUser)', function (data) {
+                console.log(data.field)
+                if (data.field.account.length != 5){
+                    layer.msg("账号必须为5位数");
+                }else if (data.field.uname.length < 2 || data.field.uname.length > 4 ){
+                    layer.msg("姓名必须2~4位数");
+                }else {
+                    $.ajax({
+                        url: '<%=path+"user/addUser"%>',
+                        type: "POST",
+                        data: data.field,
+                        dataType: 'text',
+                        success: function (result) {
+                            if (result === 'true') {
+                                layer.alert('新增成功,初始密码：000000');
+                                layer.closeAll('page');
+                                table.reload('userinfo');
+                            } else if (result === 'false') {
+                                layer.alert('新增失败');
+                            } else if (result === 'have') {
+                                layer.alert('已有此账号，请重新新增');
+                            }
+
+                        }
+                    });
+                }
+                return false;
             });
         });
     });

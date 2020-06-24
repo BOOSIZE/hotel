@@ -14,4 +14,8 @@ public interface UserService
 	public abstract String log(String account, String password, HttpSession session);
 
     String userOpe(String urole, Integer page, Integer limit, HttpServletRequest request);
+
+    String addUser(Userinfo userinfo);
+
+	String delUser(Userinfo userinfo);
 }
