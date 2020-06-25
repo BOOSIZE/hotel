@@ -81,9 +81,7 @@
         </div>
     </form>
 </script>
-<script type="text/html" id="xuhao">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
+
 <script type="text/html" id="bar">
     {{#  if(d.urole==='2' ){ }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
@@ -104,7 +102,7 @@
             , url: '<%=path+"user/userOpe"%>' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
-                {title: '序号', templet: '#xuhao'}
+                {title: '序号', type: 'numbers'}
                 , {field: 'account', title: '账号'}
                 , {field: 'uname', title: '姓名'}
                 , {field: 'usex', title: '性别'}

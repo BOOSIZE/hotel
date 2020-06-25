@@ -17,4 +17,7 @@ public interface RoomDao {
             "<when test='tname!=null'> AND tname = #{tname}</when>" +
             " LIMIT #{limit} OFFSET #{end}  </script>")
     List<Typeinfo> roomOpe(Integer limit, int end, String tname);
+
+    @Select("select distinct tname from typeinfo")
+    List<String> tname();
 }

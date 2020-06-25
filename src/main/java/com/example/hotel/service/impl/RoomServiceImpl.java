@@ -25,4 +25,9 @@ public class RoomServiceImpl implements RoomService {
 
         return new Gson().toJson(tableModel);
     }
+
+    @Override
+    public String tname() {
+        return new Gson().toJson(roomDao.tname());
+    }
 }

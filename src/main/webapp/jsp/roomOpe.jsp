@@ -23,7 +23,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">房间类型</label>
         <div class="layui-input-inline">
-            <select name="tname">
+            <select id="tname" name="tname">
                 <option value="">请选择房间类型</option>
 
             </select>
@@ -80,9 +80,7 @@
         </div>
     </form>
 </script>
-<script type="text/html" id="xuhao">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
+
 <%--<script type="text/html" id="bar">--%>
 <%--    {{#  if(d.urole==='2' ){ }}--%>
 <%--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>--%>
@@ -90,11 +88,41 @@
 
 <%--</script>--%>
 <script>
+    layui.use(['form'],function () {
+        var form = layui.form;
+
+        //ajax
+        window.onload = function f() {
+            $('#tname').empty();
+            $('#tname').append('<option value="">请选择房间类型</option>');
+
+            $.ajax({
+                type: "POST",
+                url: '<%=path+"room/tname"%>',
+                dataType: "text",
+                sync: true,
+                data: {},
+                success: function (msg) {
+                    var list = JSON.parse(msg);
+                    for (var i = 0; i < list.length; i++) {
+                        $('#tname').append('<option value="' + list[i] + '">' + list[i] + '</option>');
+                    }
+                    form.render();
+                },
+                error: function () {
+                    layer.msg('服务器繁忙');
+                }
+            });
+        }
+    })
+</script>
+<script>
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
         var table = layui.table;
+
 
         table.render({
             elem: '#typeinfo'
@@ -102,18 +130,20 @@
             // ,height: 312
             , url: '<%=path+"room/roomOpe"%>' //数据接口
             , page: true //开启分页
+            , limit: 5
+            , limits: [5]
             , cols: [[ //表头
-                {title: '序号', templet: '#xuhao'}
+                {title: '序号', type: 'numbers'}
                 , {field: 'img', title: '房间图片'}
                 , {field: 'tname', title: '房间类型'}
                 , {field: 'tpeople', title: '入住人数上限'}
-                , {field: 'roomNum', title: '房间号'}
+                , {field: 'roomnum', title: '房间号'}
                 , {field: 'amt', title: '价格'}
                 , {
-                    field: 'roomState', title: '房间状态', templet: function (d) {
-                        if (d.roomState == '0') {
+                    field: 'roomstate', title: '房间状态', templet: function (d) {
+                        if (d.roomstate == '0') {
                             return '未入住';
-                        } else if (d.roomState == '1') {
+                        } else if (d.roomstate == '1') {
                             return '已入住';
                         }
                     }
@@ -173,7 +203,7 @@
             form.render();
 
             form.on('submit(addRoom)', function (data) {
-                    console.log(data.field)
+
                     if (data.field.account.length != 6) {
                         layer.msg("账号必须为6位");
                     } else if (!/^[0-9]*$/.test(data.field.account)) {

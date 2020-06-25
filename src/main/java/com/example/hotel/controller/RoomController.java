@@ -17,9 +17,15 @@ public class RoomController {
 
     @RequestMapping("roomOpe")
     @ResponseBody
-    public String roomOpe(String tname, Integer page, Integer limit, HttpServletRequest request)
-    {
+    public String roomOpe(String tname, Integer page, Integer limit, HttpServletRequest request) {
 
         return roomServiceImpl.roomOpe(tname,page,limit,request);
+    }
+
+    @RequestMapping("tname")
+    @ResponseBody
+    public String tname() {
+        System.out.println("3333333333333");
+        return roomServiceImpl.tname();
     }
 }
