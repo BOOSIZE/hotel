@@ -109,8 +109,8 @@
                 , {field: 'uname', title: '姓名'}
                 , {field: 'usex', title: '性别'}
                 , {field: 'udate', title: '注册时间'}
-                ,{
-                    field: 'urole', title: '角色',  templet: function (d) {
+                , {
+                    field: 'urole', title: '角色', templet: function (d) {
                         if (d.urole === '3') {
                             return '经理';
                         } else if (d.urole === '2') {
@@ -173,33 +173,39 @@
             form.render();
 
             form.on('submit(addUser)', function (data) {
-                console.log(data.field)
-                if (data.field.account.length != 6) {
-                    layer.msg("账号必须为6位");
-                } else if (data.field.uname.length < 2 || data.field.uname.length > 6) {
-                    layer.msg("姓名必须2~6位");
-                } else {
-                    data.field.account = 'yg'+data.field.account;
-                    layer.confirm('确认新增账号:'+data.field.account+',初始密码:000000的员工吗?', function (index) {
-                        $.ajax({
-                            url: '<%=path+"user/addUser"%>',
-                            type: "POST",
-                            data: data.field,
-                            dataType: 'text',
-                            success: function (result) {
-                                if (result === 'true') {
-                                    layer.alert('新增成功');
-                                    layer.closeAll('page');
-                                    table.reload('userinfo');
-                                } else if (result === 'false') {
-                                    layer.alert('新增失败');
-                                } else if (result === 'have') {
-                                    layer.alert('已有此账号，请重新新增');
-                                }
+                    console.log(data.field)
+                    if (data.field.account.length != 6) {
+                        layer.msg("账号必须为6位");
+                    } else if (!/^[0-9]*$/.test(data.field.account)) {
+                        layer.msg("账号必须为纯数字");
+                    } else if (data.field.uname.length < 2 || data.field.uname.length > 6) {
+                        layer.msg("姓名必须2~6位");
+                    } else {
+                        data.field.account = 'yg' + data.field.account;
+                        var urole = "经理";
+                        if (data.field.urole == '2') {
+                            urole = "员工";
+                        }
+                        layer.confirm('确认新增 角色:' + urole + ',账号:' + data.field.account + ',初始密码:000000的员工吗?', function (index) {
+                            $.ajax({
+                                url: '<%=path+"user/addUser"%>',
+                                type: "POST",
+                                data: data.field,
+                                dataType: 'text',
+                                success: function (result) {
+                                    if (result === 'true') {
+                                        layer.alert('新增成功');
+                                        layer.closeAll('page');
+                                        table.reload('userinfo');
+                                    } else if (result === 'false') {
+                                        layer.alert('新增失败');
+                                    } else if (result === 'have') {
+                                        layer.alert('已有此账号，请重新新增');
+                                    }
 
-                            }
+                                }
+                            });
                         });
-                    });
                     }
                     return false;
                 }
