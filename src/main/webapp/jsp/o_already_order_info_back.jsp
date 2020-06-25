@@ -43,7 +43,7 @@
                 , {field: 'tname', title: '房间类型'}
                 , {field: 'omoney', title: '价格'}
                 , {field: 'oday', title: '入住天数'}
-                , {field: 'opeople', title: '入住天数'}
+                , {field: 'opeople', title: '入住人数'}
                 , {field: 'otime', title: '预定时间'}
                 , {field: 'oend', title: '退房时间'}
                 , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}

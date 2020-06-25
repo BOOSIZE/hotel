@@ -1,6 +1,7 @@
 package com.example.hotel.service.impl;
 
 import com.example.hotel.dao.OrderInfoDao;
+import com.example.hotel.entity.Orderinfo;
 import com.example.hotel.entity.TableModel;
 import com.example.hotel.service.OrderInfoService;
 import com.google.gson.Gson;
@@ -36,10 +37,21 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
-    public String allList(Integer page, Integer limit, String account) {
+    public String allList(Integer page, Integer limit, String account,String urole) {
         TableModel tableModel = new TableModel();
         tableModel.setCount(orderInfoDao.getAllSum(account));
-        tableModel.setData(orderInfoDao.allList(limit, limit * (page - 1), account));
+        tableModel.setData(orderInfoDao.allList(limit, limit * (page - 1), account,urole));
         return new Gson().toJson(tableModel);
+    }
+
+    @Override
+    public String checkIn(Orderinfo orderInfo) {
+        String result = "false";
+
+        Integer index = orderInfoDao.checkIn(orderInfo.getOid());
+        if (index > 0) {
+            result = "true";
+        }
+        return result;
     }
 }

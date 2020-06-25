@@ -1,5 +1,7 @@
 package com.example.hotel.controller;
 
+import com.example.hotel.entity.Orderinfo;
+import com.example.hotel.entity.Userinfo;
 import com.example.hotel.service.OrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +36,14 @@ public class BackOrderInfoController {
 
     @RequestMapping("/all/list")
     @ResponseBody
-    public String allList(Integer page, Integer limit, String account) {
-        return orderInfoService.allList(page, limit, account);
+    public String allList(Integer page, Integer limit, String account,String urole) {
+        return orderInfoService.allList(page, limit, account,urole);
+    }
+
+    @RequestMapping("checkIn")
+    @ResponseBody
+    public String checkIn(Orderinfo orderInfo) {
+        return orderInfoService.checkIn(orderInfo);
+
     }
 }

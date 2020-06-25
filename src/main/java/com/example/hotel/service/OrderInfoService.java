@@ -1,5 +1,7 @@
 package com.example.hotel.service;
 
+import com.example.hotel.entity.Orderinfo;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -11,5 +13,7 @@ public interface OrderInfoService {
 
     String preList(Integer page, Integer limit, HttpServletRequest request);
 
-    String allList(Integer page, Integer limit, String account);
+    String allList(Integer page, Integer limit, String account,String urole);
+
+    String checkIn(Orderinfo orderInfo);
 }

@@ -43,7 +43,7 @@
                 , {field: 'tname', title: '房间类型'}
                 , {field: 'omoney', title: '价格'}
                 , {field: 'oday', title: '入住天数'}
-                , {field: 'opeople', title: '入住天数'}
+                , {field: 'opeople', title: '入住人数'}
                 , {field: 'otime', title: '预定时间'}
                 , {field: 'oend', title: '退房时间'}
                 , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}
@@ -56,8 +56,21 @@
             console.log(obj)
             var data = obj.data;//获取点击行数据
             if (obj.event === 'back_one') {
-                layer.confirm('预留按钮1?', function (index) {
-                    alert("你的操作，唐狗");
+                layer.confirm('确认将订单进行入住吗', function (index) {
+                    $.ajax({
+                        url: "/back/order/checkIn",
+                        type: "POST",
+                        data: data,
+                        dataType: 'text',
+                        success: function (result) {
+                            if (result === 'true') {
+                                layer.alert("入住成功");
+                                table.reload('userinfo');
+                            } else {
+                                layer.alert('入住失败');
+                            }
+                        }
+                    });
                 });
             }
             if (obj.event === 'back_two') {

@@ -19,6 +19,24 @@
     <script type="text/javascript" src="<%=path+"js/jquery-3.4.1.js"%>"></script>
 </head>
 <body>
+
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单状态</label>
+        <div class="layui-input-inline">
+            <select name="urole">
+                <option value=""></option>
+                <option value="预定">预定</option>
+                <option value="入住">入住</option>
+                <option value="已退房">已退房</option>
+            </select>
+        </div>
+        <div class="layui-input-inline">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
+        </div>
+    </div>
+</form>
+
 <input type="hidden" value="${sessionScope.user.account}" id="user">
 <table id="userinfo" lay-filter="userinfo"></table>
 
@@ -43,14 +61,27 @@
                 {title: '序号', type: 'numbers', width: '5%'}
                 , {field: 'tname', title: '房间类型'}
                 , {field: 'omoney', title: '价格'}
+                , {field: 'otype', title: '房间状态'}
                 , {field: 'oday', title: '入住天数'}
-                , {field: 'opeople', title: '入住天数'}
+                , {field: 'opeople', title: '入住人数'}
                 , {field: 'otime', title: '预定时间'}
                 , {field: 'oend', title: '退房时间'}
                 , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}
             ]]
         });
 
+        form.on('submit(formDemo)', function (data) {
+            table.reload('userinfo',
+                {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        otype: data.field.urole
+                    }
+                });
+            return false;
+        });
 
         //监听工具条
         table.on('tool(userinfo)', function (obj) {

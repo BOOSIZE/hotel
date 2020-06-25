@@ -5,6 +5,7 @@ import com.example.hotel.entity.Userinfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -15,24 +16,27 @@ import java.util.List;
 @Mapper
 public interface OrderInfoDao {
 
-    @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE otype='预定' </script>")
+    @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE otype='入住' </script>")
     int getSum();
 
-    @Select("<script> SELECT * FROM orderinfo WHERE otype='预定' " +
+    @Select("<script> SELECT * FROM orderinfo WHERE otype='入住' " +
             "ORDER BY otime desc LIMIT #{limit} OFFSET #{end}  </script>")
     List<Orderinfo> alreadyList(Integer limit, int end);
 
-    @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE otype='入住' </script>")
+    @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE otype='预定' </script>")
     int getPreSum();
 
-    @Select("<script> SELECT * FROM orderinfo WHERE otype='入住' " +
+    @Select("<script> SELECT * FROM orderinfo WHERE otype='预定' " +
             "ORDER BY oend desc LIMIT #{limit} OFFSET #{end}  </script>")
     List<Orderinfo> preList(Integer limit, int end);
 
     @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE account=#{account} </script>")
     int getAllSum(@Param("account") String account);
 
-    @Select("<script> SELECT * FROM orderinfo WHERE account=#{account} " +
+    @Select("<script> SELECT * FROM orderinfo WHERE account=#{account} and otype=#{urole}" +
             "ORDER BY otime desc LIMIT #{limit} OFFSET #{end}  </script>")
-    List<Orderinfo> allList(Integer limit, int end, @Param("account") String account);
+    List<Orderinfo> allList(Integer limit, int end, @Param("account") String account, String urole);
+
+    @Update("update orderinfo set otype='入住' where oid=#{iod}")
+    Integer checkIn(long oid);
 }
