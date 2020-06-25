@@ -6,9 +6,10 @@ public class Typeinfo {
   private long tid;
   private String tname;
   private String img;
-  private String tsum;
-  private String tcount;
+  private String roomnum;
+  private String roomstate;
   private String tpeople;
+  private String amt;
 
 
   public long getTid() {
@@ -37,24 +38,21 @@ public class Typeinfo {
     this.img = img;
   }
 
-
-  public String getTsum() {
-    return tsum;
+  public String getRoomnum() {
+    return roomnum;
   }
 
-  public void setTsum(String tsum) {
-    this.tsum = tsum;
+  public void setRoomnum(String roomnum) {
+    this.roomnum = roomnum;
   }
 
-
-  public String getTcount() {
-    return tcount;
+  public String getRoomstate() {
+    return roomstate;
   }
 
-  public void setTcount(String tcount) {
-    this.tcount = tcount;
+  public void setRoomstate(String roomstate) {
+    this.roomstate = roomstate;
   }
-
 
   public String getTpeople() {
     return tpeople;
@@ -64,4 +62,11 @@ public class Typeinfo {
     this.tpeople = tpeople;
   }
 
+  public String getAmt() {
+    return amt;
+  }
+
+  public void setAmt(String amt) {
+    this.amt = amt;
+  }
 }

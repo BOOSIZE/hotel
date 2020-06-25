@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>员工管理</title>
+    <title>房间管理</title>
     <link rel="stylesheet" href="<%=path+"js/layui/css/layui.css"%>">
     <script type="text/javascript" src="<%=path+"js/layui/layui.js"%>"></script>
     <script type="text/javascript" src="<%=path+"js/jquery-3.4.1.js"%>"></script>
@@ -21,12 +21,11 @@
 <body>
 <form class="layui-form" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">角色</label>
+        <label class="layui-form-label">房间类型</label>
         <div class="layui-input-inline">
-            <select name="urole">
-                <option value=""></option>
-                <option value="3">经理</option>
-                <option value="2">员工</option>
+            <select name="tname">
+                <option value="">请选择房间类型</option>
+
             </select>
         </div>
         <div class="layui-input-inline">
@@ -39,9 +38,9 @@
 
 </form>
 
-<table id="userinfo" lay-filter="userinfo"></table>
+<table id="typeinfo" lay-filter="typeinfo"></table>
 
-<script type="text/html" id="adduser">
+<script type="text/html" id="addroom">
     <form class="layui-form" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">账号:</label>
@@ -76,7 +75,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-inline" style="margin-left: 25%">
-                <button class="layui-btn" lay-submit lay-filter="addUser">新增</button>
+                <button class="layui-btn" lay-submit lay-filter="addRoom">新增</button>
             </div>
         </div>
     </form>
@@ -84,12 +83,12 @@
 <script type="text/html" id="xuhao">
     {{d.LAY_TABLE_INDEX+1}}
 </script>
-<script type="text/html" id="bar">
-    {{#  if(d.urole==='2' ){ }}
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
-    {{#  } }}
+<%--<script type="text/html" id="bar">--%>
+<%--    {{#  if(d.urole==='2' ){ }}--%>
+<%--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>--%>
+<%--    {{#  } }}--%>
 
-</script>
+<%--</script>--%>
 <script>
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
         var $ = layui.jquery;
@@ -98,64 +97,65 @@
         var table = layui.table;
 
         table.render({
-            elem: '#userinfo'
+            elem: '#typeinfo'
             // , id: "testReload"
             // ,height: 312
-            , url: '<%=path+"user/userOpe"%>' //数据接口
+            , url: '<%=path+"room/roomOpe"%>' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
                 {title: '序号', templet: '#xuhao'}
-                , {field: 'account', title: '账号'}
-                , {field: 'uname', title: '姓名'}
-                , {field: 'usex', title: '性别'}
-                , {field: 'udate', title: '注册时间'}
+                , {field: 'img', title: '房间图片'}
+                , {field: 'tname', title: '房间类型'}
+                , {field: 'tpeople', title: '入住人数上限'}
+                , {field: 'roomNum', title: '房间号'}
+                , {field: 'amt', title: '价格'}
                 , {
-                    field: 'urole', title: '角色', templet: function (d) {
-                        if (d.urole === '3') {
-                            return '经理';
-                        } else if (d.urole === '2') {
-                            return '员工';
+                    field: 'roomState', title: '房间状态', templet: function (d) {
+                        if (d.roomState == '0') {
+                            return '未入住';
+                        } else if (d.roomState == '1') {
+                            return '已入住';
                         }
                     }
                 }
-                , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}
+                // , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}
             ]]
         });
 
 
-        //监听工具条
-        table.on('tool(userinfo)', function (obj) {
-            console.log(obj)
-            var data = obj.data;//获取点击行数据
-            if (obj.event === 'delete') {
-                layer.confirm('确认删除该员工吗?', function (index) {
-
-                    $.ajax({
-                        url: "/user/delUser",
-                        type: "POST",
-                        data: data,
-                        dataType: 'text',
-                        success: function (result) {
-                            if (result === 'true') {
-                                layer.alert("删除成功");
-                                table.reload('userinfo');
-                            } else {
-                                layer.alert('删除失败');
-                            }
-                        }
-                    });
-                });
-            }
-        });
+        // //监听工具条
+        // table.on('tool(typeinfo)', function (obj) {
+        //     console.log(obj)
+        //     var data = obj.data;//获取点击行数据
+        //     if (obj.event === 'delete') {
+        //         layer.confirm('确认删除该员工吗?', function (index) {
+        //
+        //             $.ajax({
+        //                 url: "/user/delUser",
+        //                 type: "POST",
+        //                 data: data,
+        //                 dataType: 'text',
+        //                 success: function (result) {
+        //                     if (result === 'true') {
+        //                         layer.alert("删除成功");
+        //                         table.reload('userinfo');
+        //                     } else {
+        //                         layer.alert('删除失败');
+        //                     }
+        //                 }
+        //             });
+        //         });
+        //     }
+        // });
 
         form.on('submit(formDemo)', function (data) {
-            table.reload('userinfo',
+            table.reload('typeinfo',
                 {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     , where: {
-                        urole: data.field.urole
+                        tname: data.field.tname
                     }
                 });
             return false;
@@ -165,15 +165,15 @@
             layer.open({
                 type: 1 //Page层类型
                 , area: ['400px', '350px']
-                , title: '新增员工'
+                , title: '新增房间'
                 , shade: 0.3 //遮罩透明度
                 , anim: 4 //0-6的动画形式，-1不开启
                 , content: $("#adduser").html()
             });
             form.render();
 
-            form.on('submit(addUser)', function (data) {
-
+            form.on('submit(addRoom)', function (data) {
+                    console.log(data.field)
                     if (data.field.account.length != 6) {
                         layer.msg("账号必须为6位");
                     } else if (!/^[0-9]*$/.test(data.field.account)) {
@@ -188,7 +188,7 @@
                         }
                         layer.confirm('确认新增 角色:' + urole + ',账号:' + data.field.account + ',初始密码:000000的员工吗?', function (index) {
                             $.ajax({
-                                url: '<%=path+"user/addUser"%>',
+                                url: '<%=path+"room/addRoom"%>',
                                 type: "POST",
                                 data: data.field,
                                 dataType: 'text',
