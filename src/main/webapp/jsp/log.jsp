@@ -37,7 +37,7 @@
 		<div class="layui-input-block">
 			<button class="layui-btn" lay-submit lay-filter="formDemo" id="log" style="margin-left: 10%;">登录</button>
 			<span><a href="<%=path+"go/to/reg"%>">注册</a></span>
-			<a href="<%=path%>/UserServlet?method=login2">游客访问</a>
+			<a href="<%=path+"go/to/nomain"%>">游客访问</a>
 		</div>
 	</div>
 </div>
