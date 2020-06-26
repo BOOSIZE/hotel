@@ -33,7 +33,8 @@ public interface OrderInfoDao {
     @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE account=#{account} </script>")
     int getAllSum(@Param("account") String account);
 
-    @Select("<script> SELECT * FROM orderinfo WHERE account=#{account} and otype=#{urole}" +
+    @Select("<script> SELECT * FROM orderinfo WHERE account=#{account} "
+            + " <when test='urole!=null'> AND otype = #{urole}</when> "+
             "ORDER BY otime desc LIMIT #{limit} OFFSET #{end}  </script>")
     List<Orderinfo> allList(Integer limit, int end, @Param("account") String account, String urole);
 

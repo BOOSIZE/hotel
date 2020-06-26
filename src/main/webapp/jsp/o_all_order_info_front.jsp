@@ -77,7 +77,7 @@
                         curr: 1 //重新从第 1 页开始
                     }
                     , where: {
-                        otype: data.field.urole
+                        urole: data.field.urole
                     }
                 });
             return false;

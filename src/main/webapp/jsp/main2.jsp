@@ -154,17 +154,15 @@
 			layer.open({
 				type: 2,
 				content:'<%=path+"jsp/o_all_order_info_front.jsp"%>',
-				area: ['500px','400px'],
+				area: ['800px','600px'],
 				anim:4,
 				title: false,
 				success:function ()
 				{
-
+					layer.iframeAuto(index);
 				}
 			});
 		});
-
-
 	});
 
 

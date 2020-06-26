@@ -38,6 +38,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Override
     public String allList(Integer page, Integer limit, String account,String urole) {
+        if (urole == null || urole.equals("")){
+            urole = null;
+        }
         TableModel tableModel = new TableModel();
         tableModel.setCount(orderInfoDao.getAllSum(account));
         tableModel.setData(orderInfoDao.allList(limit, limit * (page - 1), account,urole));
