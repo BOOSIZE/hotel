@@ -18,7 +18,7 @@
     <script type="text/javascript" src="<%=path+"js/layui/layui.js"%>"></script>
     <script type="text/javascript" src="<%=path+"js/jquery-3.4.1.js"%>"></script>
 </head>
-<body style="width: 500px;">
+<body>
 <form class="layui-form" action="">
     <div class="layui-form-item">
         <label class="layui-form-label">订单状态</label>
@@ -32,6 +32,7 @@
         </div>
         <div class="layui-input-inline">
             <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
+            <button class="layui-btn" onclick="backMain()">回到主页</button>
         </div>
     </div>
 </form>
@@ -99,8 +100,11 @@
             }
         });
     });
-
-
+</script>
+<script>
+    function backMain() {
+        window.location.href="<%=path+"go/to/main2"%>";
+    }
 </script>
 </body>
 </html>
