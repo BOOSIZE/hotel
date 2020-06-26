@@ -25,14 +25,14 @@
 <center>
 	<br>
 
-	<h1 >欢迎<%  out.write(userinfo.getUname());   %>访问网上订餐管理系统</h1></center>
+	<h1 >欢迎<%  out.write(userinfo.getUname());   %>访问蔡卤鹏酒店官网</h1></center>
 
 <div align="right" style="float:right">
 
 
 	<a href="">查看用户信息</a>&nbsp;&nbsp;&nbsp;
 	<a href="">查看公告</a>&nbsp;&nbsp;&nbsp;
-	<a href="">查看订单</a>&nbsp;&nbsp;&nbsp;
+	<a href="#" id="order">查看订单</a>&nbsp;&nbsp;&nbsp;
 	<a href="">收银管理</a>&nbsp;&nbsp;&nbsp;
 	<a href="<%=path+"go/to/log"%>">退出</a>
 </div>
@@ -144,6 +144,31 @@
 	},3000); //定时器 重复
 </script>
 
+
+<script>
+	layui.use(['element','layer'], function(){
+		layer=layui.layer;
+
+
+		$('#order').click(function () {
+			layer.open({
+				type: 2,
+				content:'<%=path+"jsp/o_all_order_info_front.jsp"%>',
+				area: ['500px','400px'],
+				anim:4,
+				title: false,
+				success:function ()
+				{
+
+				}
+			});
+		});
+
+
+	});
+
+
+</script>
 
 </body>
 </html>

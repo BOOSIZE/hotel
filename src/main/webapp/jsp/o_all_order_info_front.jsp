@@ -18,8 +18,7 @@
     <script type="text/javascript" src="<%=path+"js/layui/layui.js"%>"></script>
     <script type="text/javascript" src="<%=path+"js/jquery-3.4.1.js"%>"></script>
 </head>
-<body>
-
+<body style="width: 500px;">
 <form class="layui-form" action="">
     <div class="layui-form-item">
         <label class="layui-form-label">订单状态</label>
@@ -36,6 +35,7 @@
         </div>
     </div>
 </form>
+
 
 <input type="hidden" value="${sessionScope.user.account}" id="user">
 <table id="userinfo" lay-filter="userinfo"></table>

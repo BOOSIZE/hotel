@@ -64,7 +64,7 @@
 
 	<div class="layui-body">
 
-		<iframe src="<%=path+"go/to/roomOpe"%>" name="myFrame" style="height: 100%;width: 100%;"></iframe>
+		<iframe src="" name="myFrame" style="height: 100%;width: 100%;"></iframe>
 	</div>
 
 
