@@ -32,7 +32,7 @@
         </div>
         <div class="layui-input-inline">
             <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
-            <button class="layui-btn" onclick="backMain()">回到主页</button>
+            <button class="layui-btn" lay-submit lay-filter="back">回到主页</button>
         </div>
     </div>
 </form>
@@ -102,9 +102,17 @@
     });
 </script>
 <script>
-    function backMain() {
-        window.location.href="<%=path+"go/to/main2"%>";
-    }
+
+
+    layui.use('form', function(){
+        var form = layui.form;
+        form.on('submit(back)', function(data)
+        {
+            window.location.href="<%=path+"go/to/main2"%>";
+            return false;
+        });
+
+    });
 </script>
 </body>
 </html>

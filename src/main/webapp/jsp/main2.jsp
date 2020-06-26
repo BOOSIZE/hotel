@@ -151,16 +151,17 @@
 
 
 		$('#order').click(function () {
-			layer.open({
-				type: 2,
-				content:'<%=path+"jsp/o_all_order_info_front.jsp"%>',
-				area: ['800px','600px'],
-				anim:4,
-				title: false,
-				success:function ()
-				{
-				}
-			});
+			<%--layer.open({--%>
+			<%--	type: 2,--%>
+			<%--	content:'<%=path+"jsp/o_all_order_info_front.jsp"%>',--%>
+			<%--	area: ['800px','600px'],--%>
+			<%--	anim:4,--%>
+			<%--	title: false,--%>
+			<%--	success:function ()--%>
+			<%--	{--%>
+			<%--	}--%>
+			<%--});--%>
+			window.location.href='<%=path+"go/to/o_all_order_info_front"%>';
 		});
 	});
 
