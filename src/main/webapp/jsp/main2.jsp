@@ -159,7 +159,6 @@
 				title: false,
 				success:function ()
 				{
-					layer.iframeAuto(index);
 				}
 			});
 		});
