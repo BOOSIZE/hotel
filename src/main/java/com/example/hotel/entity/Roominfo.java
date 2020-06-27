@@ -7,6 +7,7 @@ public class Roominfo {
   private String rnum;
   private String rtype;
   private Long tid;
+  private String tname;
 
 
   public Long getRid() {
@@ -44,4 +45,11 @@ public class Roominfo {
     this.tid = tid;
   }
 
+  public String getTname() {
+    return tname;
+  }
+
+  public void setTname(String tname) {
+    this.tname = tname;
+  }
 }

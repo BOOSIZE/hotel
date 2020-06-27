@@ -29,7 +29,7 @@
                 <option value="2">员工</option>
             </select>
         </div>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="width: 80px">
             <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
         </div>
         <div class="layui-input-inline">
