@@ -1,6 +1,5 @@
 package com.example.hotel.dao;
 
-import com.example.hotel.entity.Typeinfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -25,7 +25,6 @@ public class RoomController {
     @RequestMapping("tname")
     @ResponseBody
     public String tname() {
-        System.out.println("3333333333333");
         return roomServiceImpl.tname();
     }
 }

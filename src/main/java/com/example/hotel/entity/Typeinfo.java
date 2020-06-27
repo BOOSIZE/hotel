@@ -3,20 +3,19 @@ package com.example.hotel.entity;
 
 public class Typeinfo {
 
-  private long tid;
+  private Long tid;
   private String tname;
   private String img;
-  private String roomnum;
-  private String roomstate;
   private String tpeople;
   private String amt;
+  private String tcount;
 
 
-  public long getTid() {
+  public Long getTid() {
     return tid;
   }
 
-  public void setTid(long tid) {
+  public void setTid(Long tid) {
     this.tid = tid;
   }
 
@@ -38,21 +37,6 @@ public class Typeinfo {
     this.img = img;
   }
 
-  public String getRoomnum() {
-    return roomnum;
-  }
-
-  public void setRoomnum(String roomnum) {
-    this.roomnum = roomnum;
-  }
-
-  public String getRoomstate() {
-    return roomstate;
-  }
-
-  public void setRoomstate(String roomstate) {
-    this.roomstate = roomstate;
-  }
 
   public String getTpeople() {
     return tpeople;
@@ -62,6 +46,7 @@ public class Typeinfo {
     this.tpeople = tpeople;
   }
 
+
   public String getAmt() {
     return amt;
   }
@@ -69,4 +54,14 @@ public class Typeinfo {
   public void setAmt(String amt) {
     this.amt = amt;
   }
+
+
+  public String getTcount() {
+    return tcount;
+  }
+
+  public void setTcount(String tcount) {
+    this.tcount = tcount;
+  }
+
 }
