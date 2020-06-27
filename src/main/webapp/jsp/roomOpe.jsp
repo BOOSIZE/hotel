@@ -44,7 +44,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">房间类型</label>
             <div class="layui-input-inline">
-                <select id="tname1" name="tname"  lay-verify="required">
+                <select id="tname1" name="tname" lay-verify="required">
                     <option value="">请选择房间类型</option>
                 </select>
             </div>
@@ -65,6 +65,38 @@
         <div class="layui-form-item">
             <div class="layui-input-inline" style="margin-left: 25%">
                 <button class="layui-btn" lay-submit lay-filter="addRoom">新增</button>
+            </div>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/html" id="updateroom">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">房间类型</label>
+            <div class="layui-input-inline">
+                <select id="tname2" name="tname" lay-verify="required">
+                    <option value="">请选择房间类型</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">房间号:</label>
+            <div class="layui-input-inline" style="width: 50px;">
+                <input id="floor" name="floor" type="text" lay-verify="required" placeholder="楼层" autocomplete="off"
+                       class="layui-input">
+            </div>
+            <div class="layui-input-inline" style="width: 60px">
+                <input id="num" name="num" type="text" lay-verify="required" placeholder="房间号" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-inline" style="margin-left: 25%">
+                <button class="layui-btn" lay-submit lay-filter="updateRoom">修改</button>
             </div>
         </div>
     </form>
@@ -125,43 +157,118 @@
                 , {field: 'tname', title: '房间类型'}
                 , {field: 'rnum', title: '房间号码'}
                 , {field: 'rtype', title: '房间状态'}
-                // , {
-                //     field: 'rtype', title: '房间状态', templet: function (d) {
-                //         if (d.roomstate == '0') {
-                //             return '未入住';
-                //         } else if (d.roomstate == '1') {
-                //             return '已入住';
-                //         }
-                //     }
-                // }
+
                 , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}
             ]]
         });
 
-        // //监听工具条
-        // table.on('tool(typeinfo)', function (obj) {
-        //     console.log(obj)
-        //     var data = obj.data;//获取点击行数据
-        //     if (obj.event === 'delete') {
-        //         layer.confirm('确认删除该员工吗?', function (index) {
-        //
-        //             $.ajax({
-        //                 url: "/user/delUser",
-        //                 type: "POST",
-        //                 data: data,
-        //                 dataType: 'text',
-        //                 success: function (result) {
-        //                     if (result === 'true') {
-        //                         layer.alert("删除成功");
-        //                         table.reload('userinfo');
-        //                     } else {
-        //                         layer.alert('删除失败');
-        //                     }
-        //                 }
-        //             });
-        //         });
-        //     }
-        // });
+        //监听工具条
+        table.on('tool(roominfo)', function (obj) {
+
+            var data = obj.data;//获取点击行数据
+            if (obj.event === 'update') {
+                $('#tname2').empty();
+                var num;
+                var floor;
+                var tname = data.tname;
+                var rid = data.rid;
+                $.ajax({
+                    type: "POST",
+                    url: '<%=path+"type/tname"%>',
+                    dataType: "text",
+                    sync: true,
+                    data: {},
+                    success: function (msg) {
+                        var list = JSON.parse(msg);
+                        for (var i = 0; i < list.length; i++) {
+                            $('#tname2').append('<option value="' + list[i] + '">' + list[i] + '</option>');
+                        }
+                        $("#tname2").each(function () {
+                            // this代表的是<option></option>，对option再进行遍历
+                            $(this).children("option").each(function () {
+                                // 判断需要对那个选项进行回显
+                                if (this.value == data.tname) {
+
+                                    // 进行回显
+                                    $(this).attr("selected", "selected");
+                                }
+                            });
+                        })
+                        var list = data.rnum.split('-');
+                        $('#floor').val(list[0]);
+                        $('#num').val(list[1]);
+                        num = list[1];
+                        floor = list[0];
+                        form.render();
+                    },
+                    error: function () {
+                        layer.msg('服务器繁忙');
+                    }
+                });
+
+                layer.open({
+                    type: 1 //Page层类型
+                    , area: ['400px', '240px']
+                    , title: '修改房间'
+                    , shade: 0.3 //遮罩透明度
+                    , anim: 4 //0-6的动画形式，-1不开启
+                    , content: $("#updateroom").html()
+                });
+                form.render();
+
+
+                // var
+                form.on('submit(updateRoom)', function (data) {
+                    data.field.rid = rid;
+                    data.field.state = 1;
+                    if (data.field.num == num && data.field.floor == floor && data.field.tname == tname) {
+                        layer.msg("未作出修改");
+                    } else {
+                        if (data.field.tname != tname) {
+                            data.field.state = 2;
+                        }
+                        if (!/^[0-9]*$/.test(data.field.floor)) {
+                            layer.msg("楼层必须为整数");
+                        } else if (data.field.floor < 1 || data.field.floor > 9) {
+                            layer.msg("楼层范围1~9之间");
+                        } else if (!/^[0-9]*$/.test(data.field.num)) {
+                            layer.msg("房号必须为整数");
+                        } else if (data.field.num < 101 || data.field.num > 999) {
+                            layer.msg("房号范围101~999之间");
+                        } else if (data.field.num.substring(0, 1) != data.field.floor) {
+                            layer.msg("房号首位需要对应相应楼层");
+                        } else {
+                            layer.confirm('确认修改房间吗？', function (index) {
+                                data.field.rnum = data.field.floor + "-" + data.field.num;
+
+                                $.ajax({
+                                    url: '<%=path+"room/updateRoom"%>',
+                                    type: "POST",
+                                    data: data.field,
+                                    dataType: 'text',
+                                    success: function (result) {
+                                        if (result === 'true') {
+                                            layer.alert('修改成功');
+                                            layer.closeAll('page');
+                                            table.reload('roominfo');
+                                        } else if (result === 'false') {
+                                            layer.alert('修改失败');
+                                        } else if (result === 'have') {
+                                            layer.alert('已有此房间号，请重新修改');
+                                        }
+
+                                    }
+                                });
+                            });
+                        }
+                        return false;
+                    }
+                    return false;
+                });
+
+
+            }
+        });
 
         form.on('submit(formDemo)', function (data) {
             table.reload('roominfo',
@@ -218,11 +325,11 @@
                     layer.msg("房号必须为整数");
                 } else if (data.field.num < 101 || data.field.num > 999) {
                     layer.msg("房号范围101~999之间");
-                } else if (data.field.num.substring(0,1) != data.field.floor) {
+                } else if (data.field.num.substring(0, 1) != data.field.floor) {
                     layer.msg("房号首位需要对应相应楼层");
                 } else {
                     layer.confirm('确认新增房间吗？', function (index) {
-                        data.field.rnum = data.field.floor+"-"+data.field.num;
+                        data.field.rnum = data.field.floor + "-" + data.field.num;
 
                         $.ajax({
                             url: '<%=path+"room/addRoom"%>',
@@ -248,7 +355,8 @@
             });
             return false;
         });
-    });
+    })
+    ;
 
 
 </script>

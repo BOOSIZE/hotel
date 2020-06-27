@@ -8,7 +8,7 @@ public class Roominfo {
   private String rtype;
   private Long tid;
   private String tname;
-
+  private int state;
 
   public Long getRid() {
     return rid;
@@ -18,6 +18,13 @@ public class Roominfo {
     this.rid = rid;
   }
 
+  public int getState() {
+    return state;
+  }
+
+  public void setState(int state) {
+    this.state = state;
+  }
 
   public String getRnum() {
     return rnum;

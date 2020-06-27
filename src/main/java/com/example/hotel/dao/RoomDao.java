@@ -4,6 +4,7 @@ import com.example.hotel.entity.Roominfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -25,4 +26,18 @@ public interface RoomDao {
     @Insert("INSERT INTO roominfo (rnum, rtype, tid)" +
             " VALUES (#{rnum},#{rtype},#{tid})")
     int addRoom(Roominfo roominfo);
+
+    @Update("<script> " +
+            "update roominfo set " +
+            "<trim suffixOverrides=','>" +
+            "<if test = 'rnum != null'> " +
+            " rnum = #{rnum}, " +
+            "</if> " +
+            "<if test = 'tid != null'> " +
+            " tid = #{tid} " +
+            "</if> " +
+            "</trim>" +
+            "where rid = #{rid} " +
+            "</script>")
+    int updateRoom(Roominfo roominfo);
 }

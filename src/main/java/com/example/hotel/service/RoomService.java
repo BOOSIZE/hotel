@@ -8,4 +8,6 @@ public interface RoomService {
     String roomOpe(String tname, Integer page, Integer limit, HttpServletRequest request);
 
     String addRoom(Roominfo roominfo);
+
+    String updateRoom(Roominfo roominfo);
 }

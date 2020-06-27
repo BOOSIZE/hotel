@@ -4,7 +4,6 @@ import com.example.hotel.dao.RoomDao;
 import com.example.hotel.dao.TypeDao;
 import com.example.hotel.entity.Roominfo;
 import com.example.hotel.entity.TableModel;
-import com.example.hotel.entity.Typeinfo;
 import com.example.hotel.service.RoomService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,23 @@ public class RoomServiceImpl implements RoomService {
             roominfo.setTid(typeDao.getTypeinfo(roominfo.getTname()).getTid());
             roominfo.setRtype("未入住");
             if (roomDao.addRoom(roominfo)>0){
+                result = "true";
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String updateRoom(Roominfo roominfo) {
+        String result = "false";
+        Roominfo r = roomDao.getRoominfo(roominfo.getRnum());
+        if (r!=null && r.getRid() != roominfo.getRid()){
+            result = "have";
+        }else {
+            if (roominfo.getState() == 2){
+                roominfo.setTid(typeDao.getTypeinfo(roominfo.getTname()).getTid());
+            }
+            if (roomDao.updateRoom(roominfo)>0){
                 result = "true";
             }
         }

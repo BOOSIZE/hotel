@@ -37,5 +37,11 @@ public class RoomController {
     public String addRoom(Roominfo roominfo) {
         return roomServiceImpl.addRoom(roominfo);
     }
+    @RequestMapping("updateRoom")
+    @ResponseBody
+    public String updateRoom(Roominfo roominfo) {
+        return roomServiceImpl.updateRoom(roominfo);
+    }
+
 
 }
