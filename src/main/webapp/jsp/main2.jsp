@@ -65,16 +65,56 @@
 
 <br><br>
 <center><h1>房间展示</h1></center>
-<form name="form1" method="post" action="">
-	房间类型:<select name="ptype">
-	<option value="全部">全部</option>
-	<option value="熟食">熟食</option>
-	<option value="零食">零食</option>
-	<option value="饮品">饮品</option>
-	<option value="其他">其他</option>
-</select>
-	<input type="submit" value="查询" >
+
+
+<br>
+<form class="layui-form" action="" id="myForm">
+
+
+	<div class="layui-form-item">
+
+		<label class="layui-form-label">房间名称:</label>
+		<div class="layui-input-inline">
+			<input type="text" placeholder="房间名称" autocomplete="off" class="layui-input">
+		</div>
+
+		<label class="layui-form-label">价格:</label>
+		<div class="layui-input-inline">
+			<select >
+				<option value="博士">不限</option>
+				<option value="博士">小于100元</option>
+				<option value="硕士">100-199元</option>
+				<option value="本科">200-499元</option>
+				<option value="大专">大于500元</option>
+			</select>
+		</div>
+
+		<label class="layui-form-label">可住人数:</label>
+		<div class="layui-input-inline">
+			<select >
+				<option value="博士">不限</option>
+				<option value="博士">1人</option>
+				<option value="硕士">2人</option>
+				<option value="本科">3人</option>
+			</select>
+		</div>
+
+
+		<div class="layui-input-inline">
+			<button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
+		</div>
+	</div>
+
+
+
 </form>
+
+
+
+
+
+
+
 <table>
 	<tr>
 		<td>
@@ -146,8 +186,9 @@
 
 
 <script>
-	layui.use(['element','layer'], function(){
+	layui.use(['form','layer'], function(){
 		layer=layui.layer;
+		form=layui.form;
 
 
 		$('#order').click(function () {

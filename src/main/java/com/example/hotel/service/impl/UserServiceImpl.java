@@ -52,17 +52,21 @@ public class UserServiceImpl implements UserService
 			if(userinfo.getPassword().equals(password))
 			{
 				session.setAttribute("user",userinfo);
-				HashMap<String, ArrayList<Menu>> map=new HashMap<>();
-
-				List<Menu> fathers=menuDao.getFathers(userinfo.getUrole());
-
-				for(Menu menu :fathers)
+				if(!(userinfo.getUrole().equals("1")))
 				{
-					ArrayList<Menu> sons=(ArrayList<Menu>) menuDao.getSons(menu.getMnum());
-					map.put(menu.getMname(),sons);
+					HashMap<String, ArrayList<Menu>> map=new HashMap<>();
+
+					List<Menu> fathers=menuDao.getFathers(userinfo.getUrole());
+
+					for(Menu menu :fathers)
+					{
+						ArrayList<Menu> sons=(ArrayList<Menu>) menuDao.getSons(menu.getMnum());
+						map.put(menu.getMname(),sons);
+					}
+
+					session.setAttribute("menu",map);
 				}
 
-				session.setAttribute("menu",map);
 				switch (userinfo.getUrole())
 				{
 					case "1" :
