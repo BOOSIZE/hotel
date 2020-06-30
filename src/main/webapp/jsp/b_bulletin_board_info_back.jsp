@@ -42,7 +42,7 @@
             , page: true //开启分页
             , cols: [[ //表头
                 {title: '序号', type: 'numbers', width: '5%'}
-                , {field: 'uname', title: '发布者'}
+                , {field: 'operator', title: '发布者'}
                 , {field: 'content', title: '内容'}
                 , {field: 'time', title: '发布时间'}
                 , {title: '操作', width: '15%', toolbar: "#bar", align: 'center'}

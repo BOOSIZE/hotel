@@ -18,7 +18,7 @@ public interface BoardInfoDao {
     @Select("<script> SELECT COUNT(*) FROM boardinfo </script>")
     int getSum();
 
-    @Select("<script> SELECT * FROM boardinfo b,userinfo u WHERE b.operator = u.account  " +
+    @Select("<script> SELECT * FROM boardinfo  " +
             "ORDER BY time desc LIMIT #{limit} OFFSET #{end}  </script>")
     List<Boardinfo> backBoardList(Integer limit, int end);
 

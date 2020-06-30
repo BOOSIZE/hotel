@@ -31,14 +31,14 @@
 
 
 	<a href="">查看用户信息</a>&nbsp;&nbsp;&nbsp;
-	<a href="">查看公告</a>&nbsp;&nbsp;&nbsp;
-	<a href="#" id="order">查看订单</a>&nbsp;&nbsp;&nbsp;
+	<a href='<%=path+"go/to/b_bulletin_board_info_front"%>'>查看公告</a>&nbsp;&nbsp;&nbsp;
+	<a href='<%=path+"go/to/o_all_order_info_front"%>' id="order">查看订单</a>&nbsp;&nbsp;&nbsp;
 	<a href="">收银管理</a>&nbsp;&nbsp;&nbsp;
 	<a href="<%=path+"go/to/log"%>">退出</a>
 </div>
 
-<div class="banner" >
-	<div class="img-wrap">
+<div class="banner" id="w">
+	<div class="img-wrap" id="nn">
 		<ul>
 			<li class="item" style="display: block">
 				<img src="<%=path+"image/beijing.jpg" %>" alt="" class="lunbo">
@@ -48,11 +48,11 @@
 			</li>
 		</ul>
 	</div>
-	<div class="lr-tab">
+	<div class="lr-tab" id="zhe">
 		<div class="left btn"></div>
 		<div class="right btn"></div>
 	</div>
-	<div class="tab-btn">
+	<div class="tab-btn" id="emm">
 		<ul>
 			<li class="btn"></li>
 			<li class="btn"></li>
@@ -68,15 +68,19 @@
 
 
 <br>
+
 <form class="layui-form" action="" id="myForm">
 
 
 	<div class="layui-form-item">
 
+
 		<label class="layui-form-label">房间名称:</label>
 		<div class="layui-input-inline">
 			<input type="text" placeholder="房间名称" autocomplete="off" class="layui-input">
 		</div>
+
+
 
 		<label class="layui-form-label">价格:</label>
 		<div class="layui-input-inline">
@@ -88,6 +92,8 @@
 				<option value="大专">大于500元</option>
 			</select>
 		</div>
+
+
 
 		<label class="layui-form-label">可住人数:</label>
 		<div class="layui-input-inline">
@@ -103,14 +109,11 @@
 		<div class="layui-input-inline">
 			<button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
 		</div>
+
+
 	</div>
 
-
-
 </form>
-
-
-
 
 
 
@@ -118,7 +121,7 @@
 <table>
 	<tr>
 		<td>
-			<div>
+			<div class="zhe">
 				<dl>
 					<dt>
 						<img src="<%=path+"image/beijing.jpg"%>" width="150" height="120" />
@@ -186,26 +189,11 @@
 
 
 <script>
-	layui.use(['form','layer'], function(){
-		layer=layui.layer;
-		form=layui.form;
+	layui.use(['form','layer'], function() {
+		layer = layui.layer;
+		form = layui.form;
 
-
-		$('#order').click(function () {
-			<%--layer.open({--%>
-			<%--	type: 2,--%>
-			<%--	content:'<%=path+"jsp/o_all_order_info_front.jsp"%>',--%>
-			<%--	area: ['800px','600px'],--%>
-			<%--	anim:4,--%>
-			<%--	title: false,--%>
-			<%--	success:function ()--%>
-			<%--	{--%>
-			<%--	}--%>
-			<%--});--%>
-			window.location.href='<%=path+"go/to/o_all_order_info_front"%>';
-		});
 	});
-
 
 </script>
 

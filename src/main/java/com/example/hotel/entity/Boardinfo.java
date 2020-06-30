@@ -7,7 +7,6 @@ public class Boardinfo {
     private String content;
     private String operator;
     private String time;
-    private String uname;
 
 
     public long getId() {
@@ -45,11 +44,4 @@ public class Boardinfo {
         this.time = time;
     }
 
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
 }

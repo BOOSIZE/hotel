@@ -77,7 +77,27 @@ ul{
     background: #e4e4e4;
     border-color:#7f7f7f;
 }
-div {
+
+.zhe {
+    float: left;
+    margin: 10px;
+}
+#w {
+    float: left;
+    margin: 10px;
+}
+
+#zhe {
+    float: left;
+    margin: 10px;
+}
+
+#nn {
+    float: left;
+    margin: 10px;
+}
+
+#emm {
     float: left;
     margin: 10px;
 }
