@@ -28,4 +28,6 @@ public interface TypeDao {
     @Insert("INSERT INTO typeinfo (tname, img, tpeople, amt, tcount)" +
             " VALUES (#{tname},#{img},#{tpeople},#{amt},#{tcount})")
     int addType(Typeinfo typeinfo);
+
+
 }

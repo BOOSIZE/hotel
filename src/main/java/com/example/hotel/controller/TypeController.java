@@ -37,51 +37,33 @@ public class TypeController {
         return typeServiceImpl.tname();
     }
 
-
-//    @RequestMapping("addType")
-//    @ResponseBody
-//    public String addType(Typeinfo typeinfo) {
-//        return typeServiceImpl.addType(typeinfo);
-//    }
-
-    @RequestMapping("addType")
     @ResponseBody
-    public String addImg(Typeinfo typeinfo, @RequestParam(required=false)MultipartFile file, HttpServletRequest servletRequest) throws IOException {
-        String img = "";
-        //如果文件内容不为空，则写入上传路径
-
-        String path = servletRequest.getServletContext().getRealPath("/image");
-//        //上传文件名
-//        String filename = typeinfo.getFile().getName();
-//        System.out.println(filename);
-//        File filepath = new File(path, filename);
-//        //判断路径是否存在，没有就创建一个
-//        if (!filepath.getParentFile().exists()) {
-//            filepath.getParentFile().mkdirs();
-//        }
-//        //将上传文件保存到一个目标文档中
-//        File file1 = new File(path + File.separator + filename);
-//
-//        img = "/image/" + filename;
+    @RequestMapping("/addType")
+    public String addType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
 
 
-//        File f = new File(ResourceUtils.getURL("classpath:").getPath());
-//        File dir = new File(f.getAbsolutePath() + "/doc/");
-//        if (!dir.exists())
-//        {
-//            dir.mkdir();
-//        }
-        String name = file.getOriginalFilename();
-        File newFile = new File(path+ "/" + name);
-        img = "/image/" + name;
+        String path = request.getSession().getServletContext().getRealPath("/image");
+        String pathPhoto = "/image";
+        if (!file.isEmpty()) {
+            String name = file.getOriginalFilename();//获取接受到的图片名称
+            typeinfo.setImg(pathPhoto + "/" + name);   //为保存图片路径
+            String result = typeServiceImpl.addType(typeinfo);
+            if (result.equals("true")) {
+                File fi = new File(path, name);       //将path路径与图片名称联系在一起
+                if (!fi.getParentFile().exists()) {    //判断是否存在path路径下的文件夹
+                    fi.getParentFile().mkdirs();       //不存在创建path路径下的文件夹
+                }
+                file.transferTo(fi);                        //上传图片
+                return result;
+            }
+            return result;
 
-        System.out.println(img);
-        System.out.println(typeinfo.getImg());
-        System.out.println(typeinfo.getTname());
-        System.out.println(typeinfo.getAmt());
-        System.out.println(typeinfo.getTcount());
-        System.out.println(typeinfo.getTpeople());
-        return null;
+        } else {
+            return "noImg";
+        }
+
 
     }
+
+
 }

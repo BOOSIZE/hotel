@@ -44,4 +44,5 @@ public class TypeServiceImpl implements TypeService {
         }
         return result;
     }
+
 }

@@ -26,6 +26,7 @@
     </style>
 </head>
 <body>
+
 <form class="layui-form" action="">
     <div class="layui-form-item">
         <label class="layui-form-label">房间类型:</label>
@@ -46,19 +47,13 @@
 <table id="typeinfo" lay-filter="typeinfo"></table>
 
 <script type="text/html" id="addtype">
-    <form class="layui-form" action="">
+    <form class="layui-form" action="" id="userForm">
         <div class="layui-form-item">
-            <label class="layui-form-label">房间图片</label>
-            <div class="layui-input-block">
-                <button class="layui-btn layui-btn-normal" type="button" id="r">选择文件</button>
-                <span id="sp">选择文件</span>
-                <%--                <button type="button" class="layui-btn" id="upload11">上传图片</button>--%>
-                <%--                <input type="hidden" id="img_url1" name="img" value=""/>--%>
-                <div class="layui-upload-list">
-                    <img class="layui-upload-img" width="100px" height="80px" id="demo1"/>
-                    <%--                                    <p id="demoText1"></p>--%>
-                </div>
-            </div>
+
+            <button type="button" name="url" class="layui-btn" id="test1">上传房间图片</button>
+            <img class="layui-upload-img" id="photo" width="100" height="100">
+            <p id="demoText"></p>
+
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">房间类型:</label>
@@ -97,7 +92,7 @@
         <div class="layui-form-item">
             <div class="layui-input-inline" style="margin-left: 25%">
                 <%--                <button class="layui-btn" lay-submit lay-filter="addType">新增</button>--%>
-                <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="addType" id="y">确认新增
+                <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="addType" id="get">确认新增
                 </button>
             </div>
         </div>
@@ -112,7 +107,7 @@
                 <input type="hidden" id="img_url" name="img" value=""/>
                 <div class="layui-upload-list">
                     <img class="layui-upload-img" width="100px" height="80px" id="demo11"/>
-                    <p id="demoText"></p>
+                    <p id="demoText1"></p>
                 </div>
             </div>
         </div>
@@ -255,37 +250,39 @@
             });
             form.render();
 
-
-            <%--var uploadInst = upload.render({--%>
-            <%--    elem: '#upload1' //绑定元素--%>
-            <%--    , url: '<%=path+"type/addImg"%>' //上传接口--%>
-            //     , before: function (obj) {
-            //         //预读本地文件示例，不支持ie8
-            //         obj.preview(function (index, file, result) {
-            //             $('#demo1').attr('src', result); //图片链接（base64）
-            //         });
-            //     }
-            <%--    , done: function (res) {--%>
-            <%--        //如果上传失败--%>
-            <%--        if (res == null) {--%>
-            <%--            return layer.msg('上传失败');--%>
-            <%--        } else {--%>
-            <%--            document.getElementById("img_url").value = res.url;--%>
-            <%--        }--%>
-
-            <%--    }--%>
-            <%--    , error: function () {--%>
-            <%--        //演示失败状态，并实现重传--%>
-            <%--        var demoText = $('#demoText');--%>
-            <%--        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');--%>
-            <%--        demoText.find('.demo-reload').on('click', function () {--%>
-            <%--            uploadInst.upload();--%>
-            <%--        });--%>
-            <%--    }--%>
-            <%--});--%>
-
-
+            var uploadInst = upload.render({
+                elem: '#test1'     /*根据绑定id，打开本地图片*/
+                , url: '<%=path+"type/addType"%>'  /*上传后台接受接口*/
+                , auto: false        /*true为选中图片直接提交，false为不提交根据bindAction属性上的id提交*/
+                , bindAction: '#get'
+                , drag: true
+                , auto: false
+                , choose: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#photo').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+            //提交表单的方法
             form.on('submit(addType)', function (data) {
+                var fd = new FormData();
+                var formData = new FormData($("#userForm")[0]);
 
                 if (data.field.tname.length < 5 || data.field.tname.length > 10) {
                     layer.msg("类型名称在5~10位");
@@ -299,12 +296,20 @@
                     layer.msg("价格范围100~1000之间");
                 } else {
                     layer.confirm('确认新增房间类型吗？', function (index) {
-                        console.log(data.field);
                         $.ajax({
+                            cache: true,
+                            type: "post",
                             url: '<%=path+"type/addType"%>',
-                            type: "POST",
-                            data: data.field,
-                            dataType: 'text',
+                            async: false,
+                            data: formData,  // 你的formid
+                            contentType: false,   //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
+                            processData: false,   //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
+                            error: function (request) {
+                                layer.alert('操作失败', {
+                                    icon: 2,
+                                    title: "提示"
+                                });
+                            },
                             success: function (result) {
                                 if (result === 'true') {
                                     layer.alert('新增成功');
@@ -314,34 +319,17 @@
                                     layer.alert('新增失败');
                                 } else if (result === 'have') {
                                     layer.alert('已有此房间类型，请重新新增');
+                                } else if (result === 'noImg') {
+                                    layer.alert('需要上传房间图片');
                                 }
-
                             }
-                        });
+                        })
                     });
                 }
-                return false;
+                ;
             });
-            upload.render({
-                elem: '#r' //绑定元素
-                , auto: false
-                , multiple: true
-                , choose: function (obj) {
-                    flag = true;
-                    obj.preview(function (index, file, result) {
-                        var fileName = file.name;
-                        var sp = document.getElementById("sp");
-                        sp.innerText = fileName;
-                        $('#demo1').attr('src', result); //图片链接（base64）
-                    });
-                }
-                , done: function (res) {
-                    layer.msg("上传成功！");
-                }
-                , error: function () {
-                    layer.msg("上传失败！");
-                }
-            });
+
+
             return false;
         });
     });
