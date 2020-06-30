@@ -112,7 +112,8 @@
         var form = layui.form;
 
         //ajax
-        window.onload = function f() {
+        // window.onload = function f() {
+        $(function () {
             $('#tname').empty();
             $('#tname').append('<option value="">请选择房间类型</option>');
 
@@ -133,7 +134,7 @@
                     layer.msg('服务器繁忙');
                 }
             });
-        }
+        });
     })
 </script>
 <script>

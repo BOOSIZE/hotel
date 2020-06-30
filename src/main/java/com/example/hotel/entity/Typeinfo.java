@@ -1,6 +1,9 @@
 package com.example.hotel.entity;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
+
 public class Typeinfo {
 
   private Long tid;
@@ -9,6 +12,7 @@ public class Typeinfo {
   private String tpeople;
   private String amt;
   private String tcount;
+
 
 
   public Long getTid() {
