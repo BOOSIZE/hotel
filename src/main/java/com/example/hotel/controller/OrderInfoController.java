@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/back/order")
-public class BackOrderInfoController {
+public class OrderInfoController {
 
     @Autowired
     OrderInfoService orderInfoService;

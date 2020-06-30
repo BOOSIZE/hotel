@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>员工管理</title>
+    <title>预住单</title>
     <link rel="stylesheet" href="<%=path+"js/layui/css/layui.css"%>">
     <script type="text/javascript" src="<%=path+"js/layui/layui.js"%>"></script>
     <script type="text/javascript" src="<%=path+"js/jquery-3.4.1.js"%>"></script>
@@ -22,7 +22,7 @@
 <table id="userinfo" lay-filter="userinfo"></table>
 
 <script type="text/html" id="bar">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_one">预留按钮1</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_one">入住</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_two">预留按钮2</a>
 </script>
 <script>

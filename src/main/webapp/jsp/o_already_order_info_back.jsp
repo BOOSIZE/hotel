@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>员工管理</title>
+    <title>入住单</title>
     <link rel="stylesheet" href="<%=path+"js/layui/css/layui.css"%>">
     <script type="text/javascript" src="<%=path+"js/layui/layui.js"%>"></script>
     <script type="text/javascript" src="<%=path+"js/jquery-3.4.1.js"%>"></script>
