@@ -42,8 +42,7 @@
 <table id="userinfo" lay-filter="userinfo"></table>
 
 <script type="text/html" id="bar">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_one">预留按钮1</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_two">预留按钮2</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_one">查看详情</a>
 </script>
 <script>
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
@@ -89,14 +88,7 @@
             console.log(obj)
             var data = obj.data;//获取点击行数据
             if (obj.event === 'back_one') {
-                layer.confirm('预留按钮1?', function (index) {
-                    alert("你的操作，唐狗");
-                });
-            }
-            if (obj.event === 'back_two') {
-                layer.confirm('预留按钮2?', function (index) {
-                    alert("你的操作，唐狗");
-                });
+
             }
         });
     });

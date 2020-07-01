@@ -23,7 +23,7 @@
 
 <script type="text/html" id="bar">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_one">入住</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_two">预留按钮2</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_two">查看详情</a>
 </script>
 <script>
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
@@ -74,9 +74,7 @@
                 });
             }
             if (obj.event === 'back_two') {
-                layer.confirm('预留按钮2?', function (index) {
-                    alert("你的操作，唐狗");
-                });
+                alert("查看详情");
             }
         });
     });

@@ -22,8 +22,9 @@
 <table id="userinfo" lay-filter="userinfo"></table>
 
 <script type="text/html" id="bar">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_one">预留按钮1</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_two">预留按钮2</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_one">续费</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_two">退房</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="back_three">查看详情</a>
 </script>
 <script>
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
@@ -56,14 +57,17 @@
             console.log(obj)
             var data = obj.data;//获取点击行数据
             if (obj.event === 'back_one') {
-                layer.confirm('预留按钮1?', function (index) {
+                layer.confirm('您确认要续费吗?', function (index) {
                     alert("你的操作，唐狗");
                 });
             }
             if (obj.event === 'back_two') {
-                layer.confirm('预留按钮2?', function (index) {
+                layer.confirm('您确认要退房吗?', function (index) {
                     alert("你的操作，唐狗");
                 });
+            }
+            if (obj.event === 'back_three') {
+                alert("查看详情");
             }
         });
     });
