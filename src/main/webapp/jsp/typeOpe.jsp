@@ -99,17 +99,24 @@
     </form>
 </script>
 <script type="text/html" id="updatetype">
-    <form class="layui-form" action="">
+    <form class="layui-form" action="" id="userForm1">
         <div class="layui-form-item">
-            <label class="layui-form-label">房间图片</label>
-            <div class="layui-input-block">
-                <button type="button" class="layui-btn" id="upload1">修改图片</button>
-                <input type="hidden" id="img_url" name="img" value=""/>
-                <div class="layui-upload-list">
-                    <img class="layui-upload-img" width="100px" height="80px" id="demo11"/>
-                    <p id="demoText1"></p>
-                </div>
+            <div class="layui-form-item">
+
+                <button type="button" name="url" class="layui-btn" id="test11">上传房间图片</button>
+                <img class="layui-upload-img" id="photo1" width="100" height="100">
+                <p id="demoText1"></p>
+
             </div>
+            <%--            <label class="layui-form-label">房间图片</label>--%>
+            <%--            <div class="layui-input-block">--%>
+            <%--                <button type="button" class="layui-btn" id="upload1">修改图片</button>--%>
+            <%--                <input type="hidden" id="img_url" name="img" value=""/>--%>
+            <%--                <div class="layui-upload-list">--%>
+            <%--                    <img class="layui-upload-img" width="100px" height="80px" id="demo11"/>--%>
+            <%--                    <p id="demoText1"></p>--%>
+            <%--                </div>--%>
+            <%--            </div>--%>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">房间类型:</label>
@@ -125,6 +132,7 @@
                 <input id="amt" name="amt" type="text" lay-verify="required" placeholder="请输入房间价格" autocomplete="off"
                        class="layui-input">
             </div>
+            <input id="tid" name="tid" hidden>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">可入住人数</label>
@@ -148,7 +156,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-inline" style="margin-left: 25%">
-                <button class="layui-btn" lay-submit lay-filter="addType">新增</button>
+                <button class="layui-btn" lay-submit lay-filter="updateType">修改</button>
             </div>
         </div>
     </form>
@@ -222,7 +230,91 @@
                 })
                 $('#tname1').val(data.tname);
                 $('#amt').val(data.amt);
+                $('#photo1').attr('src', data.img); //图片链接（base64）
+                $('#tid').val(data.tid);
                 form.render();
+
+
+                //提交表单的方法
+                form.on('submit(updateType)', function (data) {
+
+                    var fd = new FormData();
+                    var formData = new FormData($("#userForm1")[0]);
+
+                    if (data.field.tname.length < 5 || data.field.tname.length > 10) {
+                        layer.msg("类型名称在5~10位");
+                    } else if (!/^[0-9]*$/.test(data.field.amt)) {
+                        layer.msg("价格必须为整数");
+                    } else if (data.field.amt < 100 || data.field.amt > 1000) {
+                        layer.msg("价格范围100~1000之间");
+                    } else if (data.field.tpeople < data.field.tcount) {
+                        layer.msg("可入住人数不可小于房间床位数");
+                    } else if (data.field.amt < 100 || data.field.amt > 1000) {
+                        layer.msg("价格范围100~1000之间");
+                    } else {
+                        layer.confirm('确认修改房间类型吗？', function (index) {
+                            $.ajax({
+                                cache: true,
+                                type: "post",
+                                url: '<%=path+"type/updateType"%>',
+                                async: false,
+                                data: formData,  // 你的formid
+                                contentType: false,   //jax 中 contentType 设置为 false 是为了避免 JQuery 对其操作，从而失去分界符，而使服务器不能正常解析文件
+                                processData: false,   //当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
+                                error: function (request) {
+                                    layer.alert('操作失败', {
+                                        icon: 2,
+                                        title: "提示"
+                                    });
+                                },
+                                success: function (result) {
+                                    if (result === 'true') {
+                                        layer.alert('修改成功');
+                                        layer.closeAll('page');
+                                        table.reload('typeinfo');
+                                    } else if (result === 'false') {
+                                        layer.alert('修改失败');
+                                    } else if (result === 'have') {
+                                        layer.alert('已有此房间类型，请重新修改');
+                                    } else if (result === 'noImg') {
+                                        layer.alert('需要上传房间图片');
+                                    }
+                                }
+                            })
+                        });
+                    }
+                    return false;
+                });
+                var uploadInst = upload.render({
+                    elem: '#test11'     /*根据绑定id，打开本地图片*/
+                    <%--, url: '<%=path+"type/addType"%>'  /*上传后台接受接口*/--%>
+                    , auto: false        /*true为选中图片直接提交，false为不提交根据bindAction属性上的id提交*/
+                    // , bindAction: '#get'
+                    , drag: true
+                    , choose: function (obj) {
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function (index, file, result) {
+                            $('#photo1').attr('src', result); //图片链接（base64）
+                        });
+                    }
+                    , done: function (res) {
+                        //如果上传失败
+                        if (res.code > 0) {
+                            return layer.msg('上传失败');
+                        }
+                        //上传成功
+                    }
+                    , error: function () {
+                        //演示失败状态，并实现重传
+                        var demoText = $('#demoText1');
+                        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                        demoText.find('.demo-reload').on('click', function () {
+                            uploadInst.upload();
+                        });
+                    }
+                });
+
+                return false;
             }
         });
 
@@ -250,35 +342,6 @@
             });
             form.render();
 
-            var uploadInst = upload.render({
-                elem: '#test1'     /*根据绑定id，打开本地图片*/
-                , url: '<%=path+"type/addType"%>'  /*上传后台接受接口*/
-                , auto: false        /*true为选中图片直接提交，false为不提交根据bindAction属性上的id提交*/
-                , bindAction: '#get'
-                , drag: true
-                , auto: false
-                , choose: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        $('#photo').attr('src', result); //图片链接（base64）
-                    });
-                }
-                , done: function (res) {
-                    //如果上传失败
-                    if (res.code > 0) {
-                        return layer.msg('上传失败');
-                    }
-                    //上传成功
-                }
-                , error: function () {
-                    //演示失败状态，并实现重传
-                    var demoText = $('#demoText');
-                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                    demoText.find('.demo-reload').on('click', function () {
-                        uploadInst.upload();
-                    });
-                }
-            });
             //提交表单的方法
             form.on('submit(addType)', function (data) {
                 var fd = new FormData();
@@ -328,7 +391,34 @@
                 }
                 ;
             });
-
+            var uploadInst = upload.render({
+                elem: '#test1'     /*根据绑定id，打开本地图片*/
+                <%--, url: '<%=path+"type/addType"%>'  /*上传后台接受接口*/--%>
+                , auto: false        /*true为选中图片直接提交，false为不提交根据bindAction属性上的id提交*/
+                // , bindAction: '#get'
+                , drag: true
+                , choose: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#photo').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
 
             return false;
         });

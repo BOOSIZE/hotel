@@ -11,4 +11,7 @@ public interface TypeService {
 
     String addType(Typeinfo typeinfo);
 
+    Typeinfo getTypeinfo(String tname);
+
+    String updateType(Typeinfo typeinfo);
 }

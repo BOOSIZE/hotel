@@ -19,10 +19,12 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public String typeOpe(String tname, Integer page, Integer limit, HttpServletRequest request) {
-        if (tname == null || tname.equals("")){tname = null;}
+        if (tname == null || tname.equals("")) {
+            tname = null;
+        }
         TableModel tableModel = new TableModel();
         tableModel.setCount(typeDao.getSum(tname));
-        tableModel.setData(typeDao.typeOpe(limit,limit*(page-1),tname));
+        tableModel.setData(typeDao.typeOpe(limit, limit * (page - 1), tname));
 
         return new Gson().toJson(tableModel);
     }
@@ -35,13 +37,29 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public String addType(Typeinfo typeinfo) {
         String result = "false";
-        if (typeDao.getTypeinfo(typeinfo.getTname())!=null){
+        if (typeDao.getTypeinfo(typeinfo.getTname()) != null) {
             result = "have";
-        }else {
-            if (typeDao.addType(typeinfo)>0){
+        } else {
+            if (typeDao.addType(typeinfo) > 0) {
                 result = "true";
             }
         }
+        return result;
+    }
+
+    @Override
+    public Typeinfo getTypeinfo(String tname) {
+        return typeDao.getTypeinfo(tname);
+    }
+
+    @Override
+    public String updateType(Typeinfo typeinfo) {
+        String result = "false";
+
+        if (typeDao.updateType(typeinfo) > 0) {
+            result = "true";
+        }
+
         return result;
     }
 

@@ -4,6 +4,7 @@ import com.example.hotel.entity.Typeinfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -29,5 +30,7 @@ public interface TypeDao {
             " VALUES (#{tname},#{img},#{tpeople},#{amt},#{tcount})")
     int addType(Typeinfo typeinfo);
 
-
+    @Update("update typeinfo set tname = #{tname},img = #{img},tpeople = #{tpeople},amt = #{amt},tcount = #{tcount} " +
+            "where tid = #{tid}")
+    int updateType(Typeinfo typeinfo);
 }

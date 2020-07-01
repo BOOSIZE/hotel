@@ -46,16 +46,16 @@ public class TypeController {
         String pathPhoto = "/image";
         if (!file.isEmpty()) {
             String name = file.getOriginalFilename();//获取接受到的图片名称
-            typeinfo.setImg(pathPhoto + "/" + name);   //为保存图片路径
-            String result = typeServiceImpl.addType(typeinfo);
-            if (result.equals("true")) {
-                File fi = new File(path, name);       //将path路径与图片名称联系在一起
-                if (!fi.getParentFile().exists()) {    //判断是否存在path路径下的文件夹
-                    fi.getParentFile().mkdirs();       //不存在创建path路径下的文件夹
-                }
-                file.transferTo(fi);                        //上传图片
-                return result;
+            File fi = new File(path, name);       //将path路径与图片名称联系在一起
+            int i = 1;
+            while (fi.exists()) {
+                name = i + name;
+                fi = new File(path, name);
+                i++;
             }
+            file.transferTo(fi);                        //上传图片
+            typeinfo.setImg(pathPhoto + "/" + name);
+            String result = typeServiceImpl.addType(typeinfo);
             return result;
 
         } else {
@@ -65,5 +65,36 @@ public class TypeController {
 
     }
 
+    @ResponseBody
+    @RequestMapping("/updateType")
+    public String updateType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
 
+       Typeinfo typeinfo1  = typeServiceImpl.getTypeinfo(typeinfo.getTname());
+
+        if (typeinfo1 == null || typeinfo.getTid().equals(typeinfo1.getTid())) {
+
+            String path = request.getSession().getServletContext().getRealPath("/image");
+            String pathPhoto = "/image";
+            if (!file.isEmpty()) {
+                String name = file.getOriginalFilename();//获取接受到的图片名称
+                File fi = new File(path, name);       //将path路径与图片名称联系在一起
+                int i = 1;
+                while (fi.exists()) {
+                    name = i + name;
+                    fi = new File(path, name);
+                    i++;
+                }
+                file.transferTo(fi);                        //上传图片
+                typeinfo.setImg(pathPhoto + "/" + name);
+                String result = typeServiceImpl.updateType(typeinfo);
+                return result;
+
+            } else {
+                return "noImg";
+            }
+        }else {
+            return "have";
+        }
+
+    }
 }
