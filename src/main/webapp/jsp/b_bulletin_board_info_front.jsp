@@ -19,6 +19,15 @@
     <script type="text/javascript" src="<%=path+"js/jquery-3.4.1.js"%>"></script>
 </head>
 <body style="background-image: url(<%=path+"image/beijing.jpg"%>);background-size: 100%">
+
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <div class="layui-input-inline">
+            <button class="layui-btn" lay-submit lay-filter="back">回到主页</button>
+        </div>
+    </div>
+</form>
+
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
     <legend>酒店公告板</legend>
 </fieldset>
@@ -71,6 +80,16 @@
             });
         }
 
+    });
+</script>
+
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        form.on('submit(back)', function (data) {
+            window.location.href = "<%=path+"go/to/main2"%>";
+            return false;
+        });
     });
 </script>
 </body>
