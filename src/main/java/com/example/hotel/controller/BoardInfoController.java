@@ -49,4 +49,10 @@ public class BoardInfoController {
     public String insertBoard(String account, String content) {
         return boardInfoService.insertBoard(account, content);
     }
+
+    @RequestMapping("/detail")
+    @ResponseBody
+    public List<?> detail(String oid) {
+        return null;
+    }
 }
