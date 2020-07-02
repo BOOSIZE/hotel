@@ -163,6 +163,7 @@
 </script>
 <script type="text/html" id="bar">
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="update">删除</a>
 </script>
 <script>
     layui.use(['jquery', 'layer', 'form', 'table', 'upload'], function () {
@@ -315,6 +316,28 @@
                 });
 
                 return false;
+            }
+            if (obj.event === 'delete'){
+                layer.confirm('确认删除房间类型吗？', function (index) {
+                    $.ajax({
+                        url: '<%=path+"type/deleteType"%>',
+                        type: "POST",
+                        data: data.field,
+                        dataType: 'text',
+                        success: function (result) {
+                            if (result === 'true') {
+                                layer.alert('删除成功');
+                                layer.closeAll('page');
+                                table.reload('roominfo');
+                            } else if (result === 'have') {
+                                layer.alert('已入住的房间不可删除');
+                            } else {
+                                layer.alert('删除失败');
+                            }
+
+                        }
+                    });
+                });
             }
         });
 

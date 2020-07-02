@@ -179,10 +179,13 @@
                     } else if (data.field.uname.length < 2 || data.field.uname.length > 6) {
                         layer.msg("姓名必须2~6位");
                     } else {
-                        data.field.account = 'yg' + data.field.account;
+
                         var urole = "经理";
                         if (data.field.urole == '2') {
                             urole = "员工";
+                            data.field.account = 'YG' + data.field.account;
+                        }else {
+                            data.field.account = 'JL' + data.field.account;
                         }
                         layer.confirm('确认新增 角色:' + urole + ',账号:' + data.field.account + ',初始密码:000000的员工吗?', function (index) {
                             $.ajax({

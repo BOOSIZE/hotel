@@ -44,4 +44,9 @@ public class RoomController {
     }
 
 
+    @RequestMapping("deleteRoom")
+    @ResponseBody
+    public String deleteRoom(Roominfo roominfo) {
+        return roomServiceImpl.deleteRoom(roominfo);
+    }
 }

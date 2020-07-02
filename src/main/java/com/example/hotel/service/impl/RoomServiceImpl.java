@@ -62,4 +62,18 @@ public class RoomServiceImpl implements RoomService {
         return result;
     }
 
+    @Override
+    public String deleteRoom(Roominfo roominfo) {
+        String result = "false";
+        Roominfo roominfo1 = roomDao.getRoominfo(roominfo.getRnum());
+        if (roominfo1.getRtype().equals("未入住")) {
+            if (roomDao.deleteRoom(roominfo) > 0) {
+                result = "true";
+            }
+        }else {
+            result = "have";
+        }
+        return result;
+    }
+
 }

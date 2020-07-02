@@ -1,10 +1,7 @@
 package com.example.hotel.dao;
 
 import com.example.hotel.entity.Roominfo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -13,19 +10,19 @@ public interface RoomDao {
 
     @Select("<script> SELECT COUNT(*) FROM typeinfo,roominfo WHERE typeinfo.tid=roominfo.tid " +
             "<when test='tname!=null'> AND typeinfo.tname =#{tname}</when></script>")
-    public abstract int getSum(String tname);
+    int getSum(String tname);
 
     @Select("<script> SELECT * FROM typeinfo,roominfo WHERE typeinfo.tid=roominfo.tid " +
             "<when test='tname!=null'> AND typeinfo.tname = #{tname}</when>" +
             " LIMIT #{limit} OFFSET #{end}  </script>")
-    public abstract List<Roominfo> roomOpe(Integer limit, int end, String tname);
+    List<Roominfo> roomOpe(Integer limit, int end, String tname);
 
     @Select("select * from roominfo where rnum = #{rnum} ")
     Roominfo getRoominfo(String rnum);
 
     @Insert("INSERT INTO roominfo (rnum, rtype, tid)" +
             " VALUES (#{rnum},#{rtype},#{tid})")
-    public abstract int addRoom(Roominfo roominfo);
+    int addRoom(Roominfo roominfo);
 
     @Update("<script> " +
             "update roominfo set " +
@@ -39,5 +36,8 @@ public interface RoomDao {
             "</trim>" +
             "where rid = #{rid} " +
             "</script>")
-    public abstract int updateRoom(Roominfo roominfo);
+    int updateRoom(Roominfo roominfo);
+
+    @Delete("delete from roominfo where rid = #{rid}")
+    int deleteRoom(Roominfo roominfo);
 }

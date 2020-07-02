@@ -105,6 +105,7 @@
 <script type="text/html" id="bar">
     {{#  if(d.rtype==='未入住' ){ }}
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="update">删除</a>
     {{#  } }}
 </script>
 <script>
@@ -268,6 +269,28 @@
                 });
 
 
+            }
+            if (obj.event === 'delete') {
+                layer.confirm('确认删除房间吗？', function (index) {
+                    $.ajax({
+                        url: '<%=path+"room/deleteRoom"%>',
+                        type: "POST",
+                        data: data.field,
+                        dataType: 'text',
+                        success: function (result) {
+                            if (result === 'true') {
+                                layer.alert('删除成功');
+                                layer.closeAll('page');
+                                table.reload('roominfo');
+                            } else if (result === 'have') {
+                                layer.alert('已入住的房间不可删除');
+                            } else {
+                                layer.alert('删除失败');
+                            }
+
+                        }
+                    });
+                });
             }
         });
 

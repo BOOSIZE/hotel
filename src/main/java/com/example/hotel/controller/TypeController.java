@@ -40,8 +40,6 @@ public class TypeController {
     @ResponseBody
     @RequestMapping("/addType")
     public String addType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
-
-
         String path = request.getSession().getServletContext().getRealPath("/image");
         String pathPhoto = "/image";
         if (!file.isEmpty()) {
@@ -61,18 +59,13 @@ public class TypeController {
         } else {
             return "noImg";
         }
-
-
     }
-
+    
     @ResponseBody
     @RequestMapping("/updateType")
     public String updateType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
-
        Typeinfo typeinfo1  = typeServiceImpl.getTypeinfo(typeinfo.getTname());
-
         if (typeinfo1 == null || typeinfo.getTid().equals(typeinfo1.getTid())) {
-
             String path = request.getSession().getServletContext().getRealPath("/image");
             String pathPhoto = "/image";
             if (!file.isEmpty()) {
