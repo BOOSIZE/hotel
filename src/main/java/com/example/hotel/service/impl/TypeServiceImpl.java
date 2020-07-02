@@ -1,7 +1,9 @@
 package com.example.hotel.service.impl;
 
 
+import com.example.hotel.dao.RoomDao;
 import com.example.hotel.dao.TypeDao;
+import com.example.hotel.entity.Roominfo;
 import com.example.hotel.entity.TableModel;
 import com.example.hotel.entity.Typeinfo;
 import com.example.hotel.service.TypeService;
@@ -16,6 +18,9 @@ public class TypeServiceImpl implements TypeService {
 
     @Autowired(required = false)
     private TypeDao typeDao;
+
+    @Autowired(required = false)
+    private RoomDao roomDao;
 
     @Override
     public String typeOpe(String tname, Integer page, Integer limit, HttpServletRequest request) {
@@ -60,6 +65,19 @@ public class TypeServiceImpl implements TypeService {
             result = "true";
         }
 
+        return result;
+    }
+
+    @Override
+    public String deleteType(Typeinfo typeinfo) {
+        String result = "false";
+        if (roomDao.getSum(typeinfo.getTname()) > 0) {
+            result = "have";
+        }else {
+           if (typeDao.deleteType(typeinfo) > 0){
+               result = "true";
+           }
+        }
         return result;
     }
 

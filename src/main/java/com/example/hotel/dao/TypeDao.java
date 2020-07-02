@@ -1,10 +1,8 @@
 package com.example.hotel.dao;
 
+import com.example.hotel.entity.Roominfo;
 import com.example.hotel.entity.Typeinfo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -33,4 +31,7 @@ public interface TypeDao {
     @Update("update typeinfo set tname = #{tname},img = #{img},tpeople = #{tpeople},amt = #{amt},tcount = #{tcount} " +
             "where tid = #{tid}")
     public abstract int updateType(Typeinfo typeinfo);
+
+    @Delete("delete from typeinfo where tid = #{tid}")
+    int deleteType(Typeinfo typeinfo);
 }

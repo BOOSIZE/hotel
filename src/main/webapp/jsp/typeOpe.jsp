@@ -328,9 +328,9 @@
                             if (result === 'true') {
                                 layer.alert('删除成功');
                                 layer.closeAll('page');
-                                table.reload('roominfo');
+                                table.reload('typeinfo');
                             } else if (result === 'have') {
-                                layer.alert('已入住的房间不可删除');
+                                layer.alert('房间类型下有房间不可删除');
                             } else {
                                 layer.alert('删除失败');
                             }

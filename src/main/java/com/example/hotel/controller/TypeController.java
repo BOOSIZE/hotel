@@ -1,5 +1,6 @@
 package com.example.hotel.controller;
 
+import com.example.hotel.entity.Roominfo;
 import com.example.hotel.entity.Typeinfo;
 import com.example.hotel.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,15 @@ public class TypeController {
             return "noImg";
         }
     }
-    
+
+
+    @RequestMapping("deleteType")
+    @ResponseBody
+    public String deleteType(Typeinfo typeinfo) {
+        return typeServiceImpl.deleteType(typeinfo);
+    }
+
+
     @ResponseBody
     @RequestMapping("/updateType")
     public String updateType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
