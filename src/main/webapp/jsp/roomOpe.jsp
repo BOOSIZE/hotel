@@ -105,7 +105,7 @@
 <script type="text/html" id="bar">
     {{#  if(d.rtype==='未入住' ){ }}
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
-    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="update">删除</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
     {{#  } }}
 </script>
 <script>
@@ -275,7 +275,7 @@
                     $.ajax({
                         url: '<%=path+"room/deleteRoom"%>',
                         type: "POST",
-                        data: data.field,
+                        data: data,
                         dataType: 'text',
                         success: function (result) {
                             if (result === 'true') {

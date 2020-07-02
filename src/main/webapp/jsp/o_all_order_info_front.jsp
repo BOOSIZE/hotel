@@ -27,7 +27,7 @@
                 <option value=""></option>
                 <option value="预定">预定</option>
                 <option value="入住">入住</option>
-                <option value="已退房">已退房</option>
+                <option value="退房">退房</option>
             </select>
         </div>
         <div class="layui-input-inline">

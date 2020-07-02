@@ -163,7 +163,7 @@
 </script>
 <script type="text/html" id="bar">
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
-    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="update">删除</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
 </script>
 <script>
     layui.use(['jquery', 'layer', 'form', 'table', 'upload'], function () {
@@ -322,7 +322,7 @@
                     $.ajax({
                         url: '<%=path+"type/deleteType"%>',
                         type: "POST",
-                        data: data.field,
+                        data: data,
                         dataType: 'text',
                         success: function (result) {
                             if (result === 'true') {

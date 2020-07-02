@@ -8,10 +8,13 @@ import com.example.hotel.entity.TableModel;
 import com.example.hotel.entity.Typeinfo;
 import com.example.hotel.service.TypeService;
 import com.google.gson.Gson;
+import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class TypeServiceImpl implements TypeService {
@@ -81,4 +84,65 @@ public class TypeServiceImpl implements TypeService {
         return result;
     }
 
+    @Override
+    public String getList(HttpSession session)
+    {
+        String str="no";
+
+        List<Typeinfo> list=(List) session.getAttribute("roomList");
+        if(list==null)
+        {
+            list=typeDao.getList(null,null,null,null);
+
+            session.setAttribute("roomList",list);
+
+            str="yes";
+        }
+
+        return str;
+    }
+
+    @Override
+    public String render(HttpSession session ,String tname,String people,String amt)
+    {
+        if(people.equals("不限"))
+        {
+            people=null;
+        }
+
+        Integer begin=null;
+        Integer end=null;
+
+
+
+        switch (amt)
+        {
+            case "1" :
+                begin=1;
+                end=99;
+                break;
+
+            case "2" :
+                begin=100;
+                end=199;
+                break;
+
+            case "3" :
+                begin=200;
+                end=499;
+                break;
+
+            case "4" :
+                begin=500;
+                break;
+        }
+
+
+        List<Typeinfo> list=typeDao.getList(tname,people,begin,end);
+        session.setAttribute("roomList",list);
+        session.setAttribute("tname",tname);
+        session.setAttribute("people",people);
+        session.setAttribute("amt",amt);
+        return "yes";
+    }
 }

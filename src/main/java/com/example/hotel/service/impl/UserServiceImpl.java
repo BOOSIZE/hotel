@@ -1,9 +1,11 @@
 package com.example.hotel.service.impl;
 
 import com.example.hotel.dao.MenuDao;
+import com.example.hotel.dao.TypeDao;
 import com.example.hotel.dao.UserDao;
 import com.example.hotel.entity.Menu;
 import com.example.hotel.entity.TableModel;
+import com.example.hotel.entity.Typeinfo;
 import com.example.hotel.entity.Userinfo;
 import com.example.hotel.service.UserService;
 import com.google.gson.Gson;
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService
 
 	@Autowired(required = false)
 	private MenuDao menuDao;
+
 
 	@Override
 	public String reg(Userinfo userinfo)

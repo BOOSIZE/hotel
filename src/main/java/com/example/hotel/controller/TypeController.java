@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public class TypeController {
     }
 
     @ResponseBody
-    @RequestMapping("/addType")
+    @RequestMapping("addType")
     public String addType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
         String path = request.getSession().getServletContext().getRealPath("/image");
         String pathPhoto = "/image";
@@ -62,6 +63,19 @@ public class TypeController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping("getList")
+    public String getList(HttpSession session)
+    {
+        return typeServiceImpl.getList(session);
+    }
+
+    @RequestMapping("render")
+    @ResponseBody
+    public String render(HttpSession session ,String tname,String people,String amt)
+    {
+        return typeServiceImpl.render(session, tname,people,amt);
+    }
 
     @RequestMapping("deleteType")
     @ResponseBody
@@ -71,7 +85,7 @@ public class TypeController {
 
 
     @ResponseBody
-    @RequestMapping("/updateType")
+    @RequestMapping("updateType")
     public String updateType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
        Typeinfo typeinfo1  = typeServiceImpl.getTypeinfo(typeinfo.getTname());
         if (typeinfo1 == null || typeinfo.getTid().equals(typeinfo1.getTid())) {

@@ -33,5 +33,12 @@ public interface TypeDao {
     public abstract int updateType(Typeinfo typeinfo);
 
     @Delete("delete from typeinfo where tid = #{tid}")
-    int deleteType(Typeinfo typeinfo);
+    public abstract int deleteType(Typeinfo typeinfo);
+
+    @Select("<script> SELECT * FROM TYPEINFO WHERE 1=1" +
+            "<when test='tname!=null'> AND TNAME LIKE CONCAT ('%',#{tname},'%') </when>" +
+            "<when test='people!=null'> AND TPEOPLE =#{people}</when>" +
+            "<when test='end!=null'> AND AMT BETWEEN #{begin} AND #{end} </when> " +
+            "<when test='begin!=null and end==null'> AND AMT >= #{begin} </when></script>")
+    public abstract List<Typeinfo> getList(String tname,String people,Integer begin,Integer end);
 }
