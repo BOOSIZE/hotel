@@ -126,4 +126,44 @@ public class UserServiceImpl implements UserService
 		}
 		return str;
 	}
+
+	@Override
+	public String addMoney(HttpSession session, String money)
+	{
+		String str="no";
+
+		Userinfo userinfo=(Userinfo) session.getAttribute("user");
+
+		Integer sum=Integer.valueOf(userinfo.getAmt())+Integer.valueOf(money);
+
+
+
+		int n=userDao.addMoney(sum+"",userinfo.getAccount());
+		if(n>0)
+		{
+			userinfo.setAmt(sum+"");
+
+			session.setAttribute("user",userinfo);
+
+			str="yes";
+		}
+
+		return str;
+	}
+
+	@Override
+	public String updatePass(HttpSession session, String pass)
+	{
+		String str="no";
+
+		Userinfo userinfo=(Userinfo) session.getAttribute("user");
+
+		int n=userDao.updatePass(pass,userinfo.getAccount());
+
+		if(n>0)
+		{
+			str="yes";
+		}
+		return str;
+	}
 }

@@ -13,9 +13,13 @@ public interface UserService
 
 	public abstract String log(String account, String password, HttpSession session);
 
-    String userOpe(String urole, Integer page, Integer limit, HttpServletRequest request);
+	public abstract String userOpe(String urole, Integer page, Integer limit, HttpServletRequest request);
 
-    String addUser(Userinfo userinfo);
+	public abstract String addUser(Userinfo userinfo);
 
-	String delUser(Userinfo userinfo);
+	public abstract String delUser(Userinfo userinfo);
+
+	public abstract String addMoney(HttpSession session,String money);
+
+	public abstract String updatePass(HttpSession session,String pass);
 }

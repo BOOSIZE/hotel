@@ -61,4 +61,25 @@ public class UserController
 
 		return userServiceImpl.delUser(userinfo);
 	}
+
+	@RequestMapping("addMoney")
+	@ResponseBody
+	public String addMoney(HttpSession session,String money)
+	{
+		return userServiceImpl.addMoney(session, money);
+	}
+	@RequestMapping("updatePass")
+	@ResponseBody
+	public String updatePass(HttpSession session,String pass)
+	{
+		return userServiceImpl.updatePass(session, pass);
+	}
+
+	@RequestMapping("getMoney")
+	@ResponseBody
+	public String getMoney(HttpSession session)
+	{
+		Userinfo userinfo=(Userinfo) session.getAttribute("user");
+		return userinfo.getAmt();
+	}
 }
