@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
  * @create 2020-06-25 21:22
  */
 public interface OrderInfoService {
-    String alreadyList(Integer page, Integer limit, HttpServletRequest request);
+    public abstract String alreadyList(Integer page, Integer limit, HttpServletRequest request);
 
-    String preList(Integer page, Integer limit, HttpServletRequest request);
+    public abstract String preList(Integer page, Integer limit, HttpServletRequest request);
 
-    String allList(Integer page, Integer limit, String account,String urole);
+    public abstract String allList(Integer page, Integer limit, String account,String urole);
 
-    String checkIn(Orderinfo orderInfo);
+    public abstract String checkIn(Orderinfo orderInfo);
 }

@@ -13,19 +13,19 @@ public interface RoomDao {
 
     @Select("<script> SELECT COUNT(*) FROM typeinfo,roominfo WHERE typeinfo.tid=roominfo.tid " +
             "<when test='tname!=null'> AND typeinfo.tname =#{tname}</when></script>")
-    int getSum(String tname);
+    public abstract int getSum(String tname);
 
     @Select("<script> SELECT * FROM typeinfo,roominfo WHERE typeinfo.tid=roominfo.tid " +
             "<when test='tname!=null'> AND typeinfo.tname = #{tname}</when>" +
             " LIMIT #{limit} OFFSET #{end}  </script>")
-    List<Roominfo> roomOpe(Integer limit, int end, String tname);
+    public abstract List<Roominfo> roomOpe(Integer limit, int end, String tname);
 
     @Select("select * from roominfo where rnum = #{rnum} ")
     Roominfo getRoominfo(String rnum);
 
     @Insert("INSERT INTO roominfo (rnum, rtype, tid)" +
             " VALUES (#{rnum},#{rtype},#{tid})")
-    int addRoom(Roominfo roominfo);
+    public abstract int addRoom(Roominfo roominfo);
 
     @Update("<script> " +
             "update roominfo set " +
@@ -39,5 +39,5 @@ public interface RoomDao {
             "</trim>" +
             "where rid = #{rid} " +
             "</script>")
-    int updateRoom(Roominfo roominfo);
+    public abstract int updateRoom(Roominfo roominfo);
 }

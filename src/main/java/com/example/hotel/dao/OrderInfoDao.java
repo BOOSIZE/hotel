@@ -17,27 +17,27 @@ import java.util.List;
 public interface OrderInfoDao {
 
     @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE otype='入住' </script>")
-    int getSum();
+    public abstract int getSum();
 
     @Select("<script> SELECT * FROM orderinfo WHERE otype='入住' " +
             "ORDER BY otime desc LIMIT #{limit} OFFSET #{end}  </script>")
-    List<Orderinfo> alreadyList(Integer limit, int end);
+    public abstract List<Orderinfo> alreadyList(Integer limit, int end);
 
     @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE otype='预定' </script>")
-    int getPreSum();
+    public abstract int getPreSum();
 
     @Select("<script> SELECT * FROM orderinfo WHERE otype='预定' " +
             "ORDER BY oend desc LIMIT #{limit} OFFSET #{end}  </script>")
-    List<Orderinfo> preList(Integer limit, int end);
+    public abstract List<Orderinfo> preList(Integer limit, int end);
 
     @Select("<script> SELECT COUNT(*) FROM orderinfo WHERE account=#{account} </script>")
-    int getAllSum(@Param("account") String account);
+    public abstract int getAllSum(@Param("account") String account);
 
     @Select("<script> SELECT * FROM orderinfo WHERE account=#{account} "
             + " <when test='urole!=null'> AND otype = #{urole}</when> "+
             "ORDER BY otime desc LIMIT #{limit} OFFSET #{end}  </script>")
-    List<Orderinfo> allList(Integer limit, int end, @Param("account") String account, String urole);
+    public abstract List<Orderinfo> allList(Integer limit, int end, @Param("account") String account, String urole);
 
     @Update("update orderinfo set otype='入住' where oid=#{iod}")
-    Integer checkIn(long oid);
+    public abstract Integer checkIn(long oid);
 }

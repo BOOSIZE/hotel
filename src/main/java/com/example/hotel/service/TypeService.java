@@ -5,13 +5,13 @@ import com.example.hotel.entity.Typeinfo;
 import javax.servlet.http.HttpServletRequest;
 
 public interface TypeService {
-    String typeOpe(String tname, Integer page, Integer limit, HttpServletRequest request);
+    public abstract String typeOpe(String tname, Integer page, Integer limit, HttpServletRequest request);
 
-    String tname();
+    public abstract String tname();
 
-    String addType(Typeinfo typeinfo);
+    public abstract String addType(Typeinfo typeinfo);
 
-    Typeinfo getTypeinfo(String tname);
+    public abstract Typeinfo getTypeinfo(String tname);
 
-    String updateType(Typeinfo typeinfo);
+    public abstract String updateType(Typeinfo typeinfo);
 }

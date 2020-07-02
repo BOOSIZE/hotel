@@ -11,11 +11,11 @@ import java.util.List;
 public interface BoardInfoService {
 
 
-    String backBoardList(Integer page, Integer limit);
+    public abstract String backBoardList(Integer page, Integer limit);
 
-    String deleteBoardById(Boardinfo boardinfo);
+    public abstract String deleteBoardById(Boardinfo boardinfo);
 
-    String insertBoard(String account, String content);
+    public abstract String insertBoard(String account, String content);
 
-    List<Boardinfo> frontBoardList();
+    public abstract List<Boardinfo> frontBoardList();
 }

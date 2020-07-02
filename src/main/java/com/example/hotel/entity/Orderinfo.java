@@ -2,7 +2,7 @@ package com.example.hotel.entity;
 
 public class Orderinfo {
 
-    private long oid;
+    private Long oid;
     private String account;
     private String tname;
     private String omoney;
@@ -11,13 +11,24 @@ public class Orderinfo {
     private String otype;
     private String otime;
     private String oend;
+    private Long rid;
 
 
-    public long getOid() {
+    public Long getOid() {
         return oid;
     }
 
-    public void setOid(long oid) {
+    public Long getRid()
+    {
+        return rid;
+    }
+
+    public void setRid(Long rid)
+    {
+        this.rid = rid;
+    }
+
+    public void setOid(Long oid) {
         this.oid = oid;
     }
 
