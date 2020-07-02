@@ -67,12 +67,68 @@
                 });
             }
             if (obj.event === 'back_three') {
-                alert("查看详情");
+                $.ajax({
+                    url: '<%=path+"board/detail"%>',
+                    type: "GET",
+                    dataType: 'text',
+                    success: function (result) {
+                    }
+                });
+                layer.open({
+                    type: 1 //Page层类型
+                    , area: ['450px', '520px']
+                    , title: '订单详情'
+                    , shade: 0.3 //遮罩透明度
+                    , anim: 4 //0-6的动画形式，-1不开启d
+                    , content: $("#adduser").html()
+                });
             }
         });
     });
 
 
+</script>
+
+
+<script type="text/html" id="adduser">
+    <div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预订人账号:</label>
+            <label class="layui-form-label" id="account"></label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名:</label>
+            <label class="layui-form-label" id="name"></label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">身份证:</label>
+            <label class="layui-form-label" id="idCard"></label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别:</label>
+            <label class="layui-form-label" id="sex"></label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">房间类型:</label>
+            <label class="layui-form-label" id="type">表格有</label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">房间号:</label>
+            <label class="layui-form-label" id="num"></label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">价格:</label>
+            <label class="layui-form-label" id="price">表格有</label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预定时间:</label>
+            <label class="layui-form-label" id="preTime">表格有</label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">退房时间:</label>
+            <label class="layui-form-label" id="loseTime">表格有</label>
+        </div>
+    </div>
 </script>
 </body>
 </html>
