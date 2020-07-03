@@ -89,11 +89,29 @@
             var data = obj.data;//获取点击行数据
             if (obj.event === 'back_one') {
                 $.ajax({
-                    url: '<%=path+"board/detail"%>',
+                    url: '<%=path+"back/order/detail"%>',
                     type: "GET",
-                    data: "",
-                    dataType: 'text',
+                    data: {
+                        oid: data.oid
+                    },
+                    dataType: 'json',
                     success: function (result) {
+                        var detail = result["orderDetail"];
+                        $('#name').text(detail.pname);
+                        $('#idCard').text(detail.pcode);
+                        $('#sex').text(detail.psex);
+                        $('#type').text(data.tname);
+                        if ("已入住" == detail.rtype) {
+                            $('#num').text(detail.rnum);
+                        } else {
+                            $('#num').text('未入住');
+                        }
+                        $('#price').text(data.omoney);
+                        $('#preTime').text(data.otime);
+                        if (data.oend != null) {
+                            $('#loseTime').text(data.oend);
+                        }
+
                     }
                 });
 
@@ -135,7 +153,7 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">房间类型:</label>
-            <label class="layui-form-label" id="type">表格有</label>
+            <label class="layui-form-label" id="type"></label>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">房间号:</label>
@@ -143,15 +161,15 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">价格:</label>
-            <label class="layui-form-label" id="price">表格有</label>
+            <label class="layui-form-label" id="price"></label>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">预定时间:</label>
-            <label class="layui-form-label" id="preTime">表格有</label>
+            <label class="layui-form-label" id="preTime"></label>
         </div>
-        <div class="layui-form-item">d
+        <div class="layui-form-item">
             <label class="layui-form-label">退房时间:</label>
-            <label class="layui-form-label" id="loseTime">表格有</label>
+            <label class="layui-form-label" id="loseTime">未退房</label>
         </div>
     </div>
 </script>

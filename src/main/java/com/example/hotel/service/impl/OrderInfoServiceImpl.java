@@ -1,6 +1,7 @@
 package com.example.hotel.service.impl;
 
 import com.example.hotel.dao.OrderInfoDao;
+import com.example.hotel.entity.OrderDetails;
 import com.example.hotel.entity.Orderinfo;
 import com.example.hotel.entity.TableModel;
 import com.example.hotel.service.OrderInfoService;
@@ -56,5 +57,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             result = "true";
         }
         return result;
+    }
+
+    @Override
+    public OrderDetails detail(String oid) {
+        return orderInfoDao.detail(oid);
     }
 }

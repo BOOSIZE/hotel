@@ -41,6 +41,7 @@
             , page: true //开启分页
             , cols: [[ //表头
                 {title: '序号', type: 'numbers', width: '5%'}
+                , {field: 'oid', hide: true, title: 'ID'}
                 , {field: 'tname', title: '房间类型'}
                 , {field: 'omoney', title: '价格'}
                 , {field: 'oday', title: '入住天数'}
@@ -68,18 +69,38 @@
             }
             if (obj.event === 'back_three') {
                 $.ajax({
-                    url: '<%=path+"board/detail"%>',
+                    url: '<%=path+"back/order/detail"%>',
                     type: "GET",
-                    dataType: 'text',
+                    data: {
+                        oid: data.oid
+                    },
+                    dataType: 'json',
                     success: function (result) {
+                        var detail = result["orderDetail"];
+                        $('#account').text(detail.account);
+                        $('#name').text(detail.pname);
+                        $('#idCard').text(detail.pcode);
+                        $('#sex').text(detail.psex);
+                        $('#type').text(data.tname);
+                        if ("已入住" == detail.rtype) {
+                            $('#num').text(detail.rnum);
+                        } else {
+                            $('#num').text('未入住');
+                        }
+                        $('#price').text(data.omoney);
+                        $('#preTime').text(data.otime);
+                        if (data.oend != null) {
+                            $('#loseTime').text(data.oend);
+                        }
                     }
                 });
+
                 layer.open({
                     type: 1 //Page层类型
                     , area: ['450px', '520px']
                     , title: '订单详情'
                     , shade: 0.3 //遮罩透明度
-                    , anim: 4 //0-6的动画形式，-1不开启d
+                    , anim: 4 //0-6的动画形式，-1不开启
                     , content: $("#adduser").html()
                 });
             }
@@ -110,7 +131,7 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">房间类型:</label>
-            <label class="layui-form-label" id="type">表格有</label>
+            <label class="layui-form-label" id="type"></label>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">房间号:</label>
@@ -118,15 +139,15 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">价格:</label>
-            <label class="layui-form-label" id="price">表格有</label>
+            <label class="layui-form-label" id="price"></label>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">预定时间:</label>
-            <label class="layui-form-label" id="preTime">表格有</label>
+            <label class="layui-form-label" id="preTime"></label>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">退房时间:</label>
-            <label class="layui-form-label" id="loseTime">表格有</label>
+            <label class="layui-form-label" id="loseTime">未退房</label>
         </div>
     </div>
 </script>

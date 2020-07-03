@@ -1,5 +1,6 @@
 package com.example.hotel.service;
 
+import com.example.hotel.entity.OrderDetails;
 import com.example.hotel.entity.Orderinfo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,4 +17,6 @@ public interface OrderInfoService {
     public abstract String allList(Integer page, Integer limit, String account,String urole);
 
     public abstract String checkIn(Orderinfo orderInfo);
+
+    OrderDetails detail(String oid);
 }

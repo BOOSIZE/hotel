@@ -1,5 +1,6 @@
 package com.example.hotel.dao;
 
+import com.example.hotel.entity.OrderDetails;
 import com.example.hotel.entity.Orderinfo;
 import com.example.hotel.entity.Userinfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,10 +35,25 @@ public interface OrderInfoDao {
     public abstract int getAllSum(@Param("account") String account);
 
     @Select("<script> SELECT * FROM orderinfo WHERE account=#{account} "
-            + " <when test='urole!=null'> AND otype = #{urole}</when> "+
+            + " <when test='urole!=null'> AND otype = #{urole}</when> " +
             "ORDER BY otime desc LIMIT #{limit} OFFSET #{end}  </script>")
     public abstract List<Orderinfo> allList(Integer limit, int end, @Param("account") String account, String urole);
 
     @Update("update orderinfo set otype='入住' where oid=#{iod}")
     public abstract Integer checkIn(long oid);
+
+    @Select("SELECT o.ACCOUNT as account,\n" +
+            "       p.PNAME   as pname,\n" +
+            "       p.PCODE   as pcode,\n" +
+            "       p.PSEX    as psex,\n" +
+            "       r.RNUM    as rnum,\n" +
+            "       r.RTYPE    as rtype\n" +
+            "FROM orderinfo o,\n" +
+            "     roominfo r,\n" +
+            "     typeinfo t,\n" +
+            "     peopleinfo p\n" +
+            "WHERE o.RID = r.RID\n" +
+            "  and r.TID = t.TID\n" +
+            "  and o.OID = p.OID and o.OID=#{oid}")
+    OrderDetails detail(String oid);
 }
