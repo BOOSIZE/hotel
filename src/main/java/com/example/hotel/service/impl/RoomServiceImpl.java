@@ -22,10 +22,12 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public String roomOpe(String tname, Integer page, Integer limit, HttpServletRequest request) {
-        if (tname == null || tname.equals("")){tname = null;}
+        if (tname == null || tname.equals("")) {
+            tname = null;
+        }
         TableModel tableModel = new TableModel();
         tableModel.setCount(roomDao.getSum(tname));
-        tableModel.setData(roomDao.roomOpe(limit,limit*(page-1),tname));
+        tableModel.setData(roomDao.roomOpe(limit, limit * (page - 1), tname));
 
         return new Gson().toJson(tableModel);
     }
@@ -33,12 +35,12 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public String addRoom(Roominfo roominfo) {
         String result = "false";
-        if (roomDao.getRoominfo(roominfo.getRnum())!=null){
+        if (roomDao.getRoominfo(roominfo.getRnum()) != null) {
             result = "have";
-        }else {
+        } else {
             roominfo.setTid(typeDao.getTypeinfo(roominfo.getTname()).getTid());
             roominfo.setRtype("未入住");
-            if (roomDao.addRoom(roominfo)>0){
+            if (roomDao.addRoom(roominfo) > 0) {
                 result = "true";
             }
         }
@@ -49,13 +51,13 @@ public class RoomServiceImpl implements RoomService {
     public String updateRoom(Roominfo roominfo) {
         String result = "false";
         Roominfo r = roomDao.getRoominfo(roominfo.getRnum());
-        if (r!=null && r.getRid() != roominfo.getRid()){
+        if (r != null && r.getRid() != roominfo.getRid()) {
             result = "have";
-        }else {
-            if (roominfo.getState() == 2){
+        } else {
+            if (roominfo.getState() == 2) {
                 roominfo.setTid(typeDao.getTypeinfo(roominfo.getTname()).getTid());
             }
-            if (roomDao.updateRoom(roominfo)>0){
+            if (roomDao.updateRoom(roominfo) > 0) {
                 result = "true";
             }
         }
@@ -70,8 +72,17 @@ public class RoomServiceImpl implements RoomService {
             if (roomDao.deleteRoom(roominfo) > 0) {
                 result = "true";
             }
-        }else {
+        } else {
             result = "have";
+        }
+        return result;
+    }
+
+    @Override
+    public String updateState(Long rid) {
+        String result = "false";
+        if (roomDao.updateState(rid) > 0) {
+            result = "true";
         }
         return result;
     }

@@ -12,4 +12,6 @@ public interface RoomService {
     public abstract String updateRoom(Roominfo roominfo);
 
     public abstract String deleteRoom(Roominfo roominfo);
+
+    String updateState(Long rid);
 }

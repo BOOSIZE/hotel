@@ -3,6 +3,7 @@ package com.example.hotel.dao;
 import com.example.hotel.entity.Roominfo;
 import org.apache.ibatis.annotations.*;
 
+import java.beans.IntrospectionException;
 import java.util.List;
 
 @Mapper
@@ -40,4 +41,7 @@ public interface RoomDao {
 
     @Delete("delete from roominfo where rid = #{rid}")
     public abstract int deleteRoom(Roominfo roominfo);
+
+    @Update("UPDATE ROOMINFO SET RTYPE ='未入住' WHERE RID=#{rid}")
+    int updateState(Long rid);
 }

@@ -184,7 +184,7 @@
 				<div class="zhe">
 					<dl>
 						<dt>
-							<img src="<%=path%> ${r.img}" width="150" height="120" />
+							<img onclick="al()" src="<%=path%> ${r.img}" width="150" height="120" style="cursor: pointer;"/>
 						</dt>
 						<dd class="dd_name">
 							名称：${r.tname}
@@ -246,6 +246,10 @@
 
 
 <script>
+	function al()
+	{
+		layer.alert('请先登录',{icon:5});
+	};
 	layui.use(['form','layer'], function() {
 		layer = layui.layer;
 		form = layui.form;

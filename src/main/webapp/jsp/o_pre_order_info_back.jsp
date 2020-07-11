@@ -85,6 +85,7 @@
                     success: function (result) {
                         var detail = result["orderDetail"];
                         $('#name').text(detail.pname);
+                        $('#account').text(detail.account);
                         $('#idCard').text(detail.pcode);
                         $('#sex').text(detail.psex);
                         $('#type').text(data.tname);

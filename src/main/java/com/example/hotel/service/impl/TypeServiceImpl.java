@@ -145,4 +145,15 @@ public class TypeServiceImpl implements TypeService {
         session.setAttribute("amt",amt);
         return "yes";
     }
+
+    @Override
+    public String getType(Long tid, HttpSession session)
+    {
+
+        Typeinfo typeinfo=typeDao.getType(tid);
+
+        session.setAttribute("type",typeinfo);
+
+        return "";
+    }
 }

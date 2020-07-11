@@ -64,7 +64,23 @@
             }
             if (obj.event === 'back_two') {
                 layer.confirm('您确认要退房吗?', function (index) {
-                    alert("你的操作，唐狗");
+                    $.ajax({
+                        url: '<%=path+"back/order/back"%>',
+                        type: "GET",
+                        data: {
+                            oid: data.oid,
+                            rid:data.rid
+                        },
+                        dataType: 'text',
+                        success: function (result) {
+                            if (result === 'true') {
+                                layer.alert("退房成功");
+                                table.reload('userinfo');
+                            } else {
+                                layer.alert('退房失败');
+                            }
+                        }
+                    });
                 });
             }
             if (obj.event === 'back_three') {

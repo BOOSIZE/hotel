@@ -46,7 +46,11 @@ public class BoardInfoController {
 
     @RequestMapping("/back/insert")
     @ResponseBody
-    public String insertBoard(String account, String content) {
+    public String insertBoard(String account, String content)
+    {
         return boardInfoService.insertBoard(account, content);
+
+
+
     }
 }

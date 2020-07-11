@@ -25,6 +25,13 @@ public class TypeController {
     @Autowired
     private TypeService typeServiceImpl;
 
+    @RequestMapping("getType")
+    @ResponseBody
+    public String getType(Long tid,HttpSession session)
+    {
+        return typeServiceImpl.getType(tid, session);
+    }
+
     @RequestMapping("typeOpe")
     @ResponseBody
     public String typeOpe(String tname, Integer page, Integer limit, HttpServletRequest request) {

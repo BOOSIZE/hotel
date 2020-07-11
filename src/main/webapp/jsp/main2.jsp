@@ -125,7 +125,7 @@
 	<a href='<%=path+"go/to/b_bulletin_board_info_front"%>'>查看公告</a>&nbsp;&nbsp;&nbsp;
 	<a href='<%=path+"go/to/o_all_order_info_front"%>' id="order">查看订单</a>&nbsp;&nbsp;&nbsp;
 	<a href="">收银管理</a>&nbsp;&nbsp;&nbsp;
-	<a href="<%=path+"go/to/log"%>">退出</a>
+	<a href="#" id="back">退出</a>
 </div>
 
 <div class="banner" id="w">
@@ -284,7 +284,10 @@
 				<div class="zhe">
 					<dl>
 						<dt>
+							<a href="">
 							<img src="<%=path%> ${r.img}" width="150" height="120" />
+							<input type="text" hidden="hidden" value="${r.tid}">
+							</a>
 						</dt>
 						<dd class="dd_name">
 							名称：${r.tname}
@@ -372,7 +375,7 @@
 				{
 					if(msg==="yes")
 					{
-						window.location.href = "<%=path+"go/to/nomain"%>"
+						window.location.href = "<%=path+"go/to/main2"%>"
 					}
 				},
 				error:function ()
@@ -401,7 +404,13 @@
 			});
 		});
 
-
+		$('#back').click(function ()
+		{
+			layer.confirm('确定要退出登录吗?', function(index)
+			{
+				window.location.href="<%=path+"go/to/log"%>";
+			});
+		});
 		$('#look').click(function ()
 		{
 			$.ajax({

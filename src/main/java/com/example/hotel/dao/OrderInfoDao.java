@@ -42,6 +42,9 @@ public interface OrderInfoDao {
     @Update("update orderinfo set otype='入住' where oid=#{iod}")
     public abstract Integer checkIn(long oid);
 
+    @Update("update orderinfo set otype='退房' where oid=#{iod}")
+    public abstract Integer back(long oid);
+
     @Select("SELECT o.ACCOUNT as account,\n" +
             "       p.PNAME   as pname,\n" +
             "       p.PCODE   as pcode,\n" +

@@ -63,4 +63,16 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public OrderDetails detail(String oid) {
         return orderInfoDao.detail(oid);
     }
+
+    @Override
+    public String back(Long oid) {
+        String result = "false";
+
+        int n=orderInfoDao.back(oid);
+
+        if (n > 0) {
+            result = "true";
+        }
+        return result;
+    }
 }

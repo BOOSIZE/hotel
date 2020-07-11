@@ -22,4 +22,6 @@ public interface TypeService {
     public abstract String getList(HttpSession session);
 
     public abstract String render(HttpSession session,String tname,String people,String amt);
+
+    public abstract String getType(Long tid,HttpSession session);
 }

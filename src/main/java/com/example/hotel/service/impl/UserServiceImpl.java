@@ -85,7 +85,8 @@ public class UserServiceImpl implements UserService
 	}
 
 	@Override
-	public String userOpe(String urole, Integer page, Integer limit, HttpServletRequest request) {
+	public String userOpe(String urole, Integer page, Integer limit, HttpServletRequest request)
+	{
 		if (urole == null || urole.equals("")){urole = null;}
 		TableModel tableModel = new TableModel();
 		tableModel.setCount(userDao.getSum(urole));

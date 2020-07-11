@@ -41,4 +41,8 @@ public interface TypeDao {
             "<when test='end!=null'> AND AMT BETWEEN #{begin} AND #{end} </when> " +
             "<when test='begin!=null and end==null'> AND AMT >= #{begin} </when></script>")
     public abstract List<Typeinfo> getList(String tname,String people,Integer begin,Integer end);
+
+    @Select("SELECT * FROM TYPEINFO WHERE TID=#{tid}")
+    Typeinfo getType(Long tid);
+
 }

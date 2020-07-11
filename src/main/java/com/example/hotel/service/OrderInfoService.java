@@ -19,4 +19,6 @@ public interface OrderInfoService {
     public abstract String checkIn(Orderinfo orderInfo);
 
     OrderDetails detail(String oid);
+
+    String back(Long oid);
 }
