@@ -27,8 +27,7 @@ public class TypeController {
 
     @RequestMapping("getType")
     @ResponseBody
-    public String getType(Long tid,HttpSession session)
-    {
+    public String getType(Long tid, HttpSession session) {
         return typeServiceImpl.getType(tid, session);
     }
 
@@ -72,16 +71,14 @@ public class TypeController {
 
     @ResponseBody
     @RequestMapping("getList")
-    public String getList(HttpSession session)
-    {
+    public String getList(HttpSession session) {
         return typeServiceImpl.getList(session);
     }
 
     @RequestMapping("render")
     @ResponseBody
-    public String render(HttpSession session ,String tname,String people,String amt)
-    {
-        return typeServiceImpl.render(session, tname,people,amt);
+    public String render(HttpSession session, String tname, String people, String amt) {
+        return typeServiceImpl.render(session, tname, people, amt);
     }
 
     @RequestMapping("deleteType")
@@ -94,7 +91,7 @@ public class TypeController {
     @ResponseBody
     @RequestMapping("updateType")
     public String updateType(MultipartFile file, Typeinfo typeinfo, HttpServletRequest request) throws Exception {
-       Typeinfo typeinfo1  = typeServiceImpl.getTypeinfo(typeinfo.getTname());
+        Typeinfo typeinfo1 = typeServiceImpl.getTypeinfo(typeinfo.getTname());
         if (typeinfo1 == null || typeinfo.getTid().equals(typeinfo1.getTid())) {
             String path = request.getSession().getServletContext().getRealPath("/image");
             String pathPhoto = "/image";
@@ -109,13 +106,13 @@ public class TypeController {
                 }
                 file.transferTo(fi);                        //上传图片
                 typeinfo.setImg(pathPhoto + "/" + name);
-                String result = typeServiceImpl.updateType(typeinfo);
-                return result;
-
-            } else {
-                return "noImg";
+            }else {
+                Typeinfo typeinfo2 = typeServiceImpl.getTypeinfoByid(typeinfo.getTid());
+                typeinfo.setImg(typeinfo2.getImg());
             }
-        }else {
+            String result = typeServiceImpl.updateType(typeinfo);
+            return result;
+        } else {
             return "have";
         }
 

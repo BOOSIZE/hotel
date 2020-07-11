@@ -325,7 +325,7 @@
                     form.render();
                 },
                 error: function () {
-                    layer.msg('服务器繁忙');
+                    layer.msg('服务器繁忙'); 
                 }
             });
             layer.open({

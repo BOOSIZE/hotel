@@ -156,4 +156,10 @@ public class TypeServiceImpl implements TypeService {
 
         return "";
     }
+
+    @Override
+    public Typeinfo getTypeinfoByid(Long tid) {
+        return typeDao.getType(tid);
+    }
+
 }
