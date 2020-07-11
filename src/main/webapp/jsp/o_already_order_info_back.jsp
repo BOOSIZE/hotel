@@ -69,7 +69,7 @@
                         type: "GET",
                         data: {
                             oid: data.oid,
-                            rid:data.rid
+                            rid: data.rid
                         },
                         dataType: 'text',
                         success: function (result) {
@@ -98,7 +98,7 @@
                         $('#idCard').text(detail.pcode);
                         $('#sex').text(detail.psex);
                         $('#type').text(data.tname);
-                        if ("已入住" == detail.rtype) {
+                        if ("入住" == data.otype || "退房" == data.otype) {
                             $('#num').text(detail.rnum);
                         } else {
                             $('#num').text('未入住');
