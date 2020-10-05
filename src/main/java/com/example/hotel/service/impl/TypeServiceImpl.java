@@ -152,9 +152,13 @@ public class TypeServiceImpl implements TypeService {
 
         Typeinfo typeinfo=typeDao.getType(tid);
 
+        int count=roomDao.getCount(tid);
+
+        typeinfo.setSum(count+"");
+
         session.setAttribute("type",typeinfo);
 
-        return "";
+        return "room";
     }
 
     @Override

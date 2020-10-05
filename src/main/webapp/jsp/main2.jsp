@@ -284,9 +284,8 @@
 				<div class="zhe">
 					<dl>
 						<dt>
-							<a href="">
+							<a href="<%=path+"type/getOneRoom?tid="%>${r.tid}">
 							<img src="<%=path%> ${r.img}" width="150" height="120" />
-							<input type="text" hidden="hidden" value="${r.tid}">
 							</a>
 						</dt>
 						<dd class="dd_name">
@@ -406,7 +405,7 @@
 
 		$('#back').click(function ()
 		{
-			layer.confirm('确定要退出登录吗?', function(index)
+			layer.confirm('您确定要退出登录吗?', function(index)
 			{
 				window.location.href="<%=path+"go/to/log"%>";
 			});
@@ -430,6 +429,7 @@
 				content: $('#msg').html(),
 				area: ['400px','400px'],
 				anim:4,
+				closeBtn:2,
 				title: '个人信息',
 				success:function ()
 				{
@@ -440,6 +440,7 @@
 			{
 				layer.open({
 				type: 1,
+				closeBtn:2,
 				content: $('#pass').html(),
 				area: ['350px','350px'],
 				anim:4,
@@ -483,9 +484,9 @@
 									layer.open({
 										title: ['温馨提示'],
 										content: '修改成功，请重新登录',
-										btn: ['确定'],
+										//btn: ['确定'],
 										closeBtn :0,
-										icon:1,
+										icon:6,
 										yes: function(){
 											window.location.href="<%=path+"go/to/log"%>";
 										}
@@ -534,7 +535,7 @@
 								}
 								else
 								{
-									layer.alert("删除失败，请重试", {icon: 5});
+									layer.alert("充值失败，请重试", {icon: 5});
 								}
 							},
 							error:function ()

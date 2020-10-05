@@ -17,6 +17,8 @@ public class UserController
 	@Autowired
 	private UserService userServiceImpl;
 
+
+
 	@RequestMapping("checkAccount")
 	@ResponseBody
 	public String checkAccount(String account)
@@ -49,7 +51,6 @@ public class UserController
 	@ResponseBody
 	public String addUser(Userinfo userinfo)
 	{
-
 		return userServiceImpl.addUser(userinfo);
 	}
 
@@ -68,6 +69,7 @@ public class UserController
 	{
 		return userServiceImpl.addMoney(session, money);
 	}
+
 	@RequestMapping("updatePass")
 	@ResponseBody
 	public String updatePass(HttpSession session,String pass)

@@ -25,10 +25,10 @@ public class TypeController {
     @Autowired
     private TypeService typeServiceImpl;
 
-    @RequestMapping("getType")
-    @ResponseBody
-    public String getType(Long tid, HttpSession session) {
-        return typeServiceImpl.getType(tid, session);
+    @RequestMapping("getOneRoom")
+    public String getOneRoom(Long tid,HttpSession session)
+    {
+      return  typeServiceImpl.getType(tid, session);
     }
 
     @RequestMapping("typeOpe")

@@ -44,4 +44,8 @@ public interface RoomDao {
 
     @Update("UPDATE ROOMINFO SET RTYPE ='未入住' WHERE RID=#{rid}")
     int updateState(Long rid);
+
+
+    @Select("SELECT COUNT(*) FROM roominfo WHERE TID=#{tid} AND RTYPE ='未入住'")
+    int getCount(Long tid);
 }

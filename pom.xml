@@ -14,7 +14,6 @@
     <packaging>war</packaging>
     <name>hotel</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -53,6 +52,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+
 
         <!--mybatis、mysql、spring-->
         <dependency>

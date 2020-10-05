@@ -185,17 +185,17 @@
                         for (var i = 0; i < list.length; i++) {
                             $('#tname2').append('<option value="' + list[i] + '">' + list[i] + '</option>');
                         }
-                        $("#tname2").each(function () {
-                            // this代表的是<option></option>，对option再进行遍历
-                            $(this).children("option").each(function () {
-                                // 判断需要对那个选项进行回显
-                                if (this.value == data.tname) {
-
-                                    // 进行回显
-                                    $(this).attr("selected", "selected");
-                                }
-                            });
-                        })
+                        // $("#tname2").each(function () {
+                        //     // this代表的是<option></option>，对option再进行遍历
+                        //     $(this).children("option").each(function () {
+                        //         // 判断需要对那个选项进行回显
+                        //         if (this.value == data.tname) {
+                        //
+                        //             // 进行回显
+                        //             $(this).attr("selected", "selected");
+                        //         }
+                        //     });
+                        // });
                         var list = data.rnum.split('-');
                         $('#floor').val(list[0]);
                         $('#num').val(list[1]);
